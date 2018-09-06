@@ -1,11 +1,17 @@
-class TagEvaluator:
-    def __init__(self):
-        self.wc_of_test = 0
-        self.wc_of_gold = 0
-        self.wc_of_correct = 0
+from tokenizer_tools.evaluator.token.base_evaluator import BaseEvaluator
 
-    def process_one_batch(self, gold_tag_list, test_tag_list, check_corpus_aligned=False):
+
+class TagEvaluator(BaseEvaluator):
+    def __init__(self, *args, **kwargs):
+        super(TagEvaluator, self).__init__(*args, **kwargs)
+
+    def process_one_batch(self, gold_data, test_data, *args, **kwargs):
         # type: (List[str], List[str]) -> None
+
+        check_corpus_aligned = kwargs.get('check_corpus_aligned', False)
+
+        gold_tag_list = gold_data
+        test_tag_list = test_data
 
         gold_tag_list_len = len(gold_tag_list)
         test_tag_list_len = len(test_tag_list)
