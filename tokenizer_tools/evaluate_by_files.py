@@ -39,6 +39,6 @@ def evaluate_by_files(test_file, gold_file, corpus_aligned=False):
 
         tag_evaluator.process_one_paragraph(gold_tags, test_tags)
 
-    precision, recall, f1 = tag_evaluator.get_score()
+    metrics = tag_evaluator.get_score()
 
-    return precision, recall, f1
+    return metrics

@@ -62,8 +62,15 @@ class TagEvaluator:
 
         f1 = (2 * precision * recall) / (precision + recall)
 
-        print("P = %f, R = %f, F-score = %f" % (precision, recall, f1))
-        return precision, recall, f1
+        metrics = {
+            "RECALL": recall,
+            "PRECISION": precision,
+            "F1-MEASURE": f1
+        }
+
+        print("metrics = {}".format(metrics))
+
+        return metrics
 
 
 if __name__ == "__main__":
