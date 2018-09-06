@@ -29,3 +29,19 @@ class TokenEvaluator(BaseEvaluator):
         self.wc_of_correct += len(common_offset)
         self.wc_of_test += len(test_offset_list)
         self.wc_of_gold += len(gold_offset_list)
+
+
+if __name__ == "__main__":
+    evaluator = TokenEvaluator()
+    evaluator.process_one_batch(
+        ['我', '是', '谁'],
+        ['我是谁']
+    )
+    evaluator.process_one_batch(
+        ['我', '是', '谁'],
+        ['我是谁']
+    )
+
+    score = evaluator.get_score()
+    print(score)
+
