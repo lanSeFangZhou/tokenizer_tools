@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import pytest
 
 from tokenizer_tools.tagset.BMES import BMESEncoderDecoder
