@@ -34,12 +34,12 @@ class TokenEvaluator(BaseEvaluator):
 if __name__ == "__main__":
     evaluator = TokenEvaluator()
     evaluator.process_one_batch(
-        ['我', '是', '谁'],
-        ['我是谁']
+        ['我是谁', '呢呢'],
+        ['我是', '谁', '呢呢']
     )
     evaluator.process_one_batch(
-        ['我', '是', '谁'],
-        ['我是谁']
+        ['我是谁', '呢呢'],
+        ['我是', '谁', '呢呢']
     )
 
     score = evaluator.get_score()
