@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from __future__ import unicode_literals
+
 import pytest
 
 from tokenizer_tools.tagset.BMES import BMESEncoderDecoder
