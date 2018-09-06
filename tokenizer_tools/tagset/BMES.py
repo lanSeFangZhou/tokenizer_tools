@@ -1,20 +1,42 @@
 class BMESEncoderDecoder:
-    def __int__(self, addition_m_tag_num=0):
+    def __init__(self, addition_m_tag_num=0):
         # TODO: using addition_m_tag_num to
         # generate BM1ES BM1M2S BM1M2MS tag scheme
-        pass
+        self.addition_m_tag_num = addition_m_tag_num
+
+        self.encoding_table = [
+            'S',
+            'BE'
+        ]
+
+    def generate_m_tag_by_char_length(self, word_length):
+        number_of_middle = word_length - 2
+        if number_of_middle > self.addition_m_tag_num:
+            addition_m = ['M{}'.format(i+1) for i in range(self.addition_m_tag_num)]
+            padding_m = ['M'] * (number_of_middle - self.addition_m_tag_num)
+        else:
+            addition_m = ['M{}'.format(i+1) for i in range(number_of_middle)]
+            padding_m = []
+
+        return addition_m + padding_m
 
     def encode_word(self, word):
         # type: (str) -> str
 
+        tag_list = self.encode_word_by_tag_list(word)
+
+        return "".join(tag_list)
+
+    def encode_word_by_tag_list(self, word):
+        # type: (str) -> List[str]
+
         len_of_word = len(word)
 
         if len_of_word == 1:
-            return 'S'
+            return ['S']
 
         if len_of_word >= 2:
-            number_of_middle = len_of_word - 2
-            return 'B' + 'M' * number_of_middle + 'E'
+            return ['B'] + self.generate_m_tag_by_char_length(len_of_word) + ['E']
 
     def encode_word_list(self, word_list):
         # type: (List[str]) -> List(str)
