@@ -25,20 +25,26 @@ class TagEvaluator:
             if gold_tag in ('E', 'S'):
                 self.wc_of_gold += 1
 
-    def get_f1(self):
+    def get_score(self):
+        # type: () -> Tuple(str, str, str)
+        """
+
+        :return: (precision, recall, f1)
+        """
+
         print("WordCount from test result:", self.wc_of_test)
         print("WordCount from golden data:", self.wc_of_gold)
         print("WordCount of correct segs :", self.wc_of_correct)
 
         # 查全率
-        P = self.wc_of_correct / float(self.wc_of_test)
+        precision = self.wc_of_correct / float(self.wc_of_test)
         # 查准率，召回率
-        R = self.wc_of_correct / float(self.wc_of_gold)
+        recall = self.wc_of_correct / float(self.wc_of_gold)
 
-        f1 = (2 * P * R) / (P + R)
+        f1 = (2 * precision * recall) / (precision + recall)
 
-        print("P = %f, R = %f, F-score = %f" % (P, R, f1))
-        return P, R, f1
+        print("P = %f, R = %f, F-score = %f" % (precision, recall, f1))
+        return precision, recall, f1
 
 
 if __name__ == "__main__":
@@ -52,5 +58,5 @@ if __name__ == "__main__":
         'BESBE'
     )
 
-    _, _, f1 = tag_evaluator.get_f1()
+    _, _, f1 = tag_evaluator.get_score()
     print(f1)
