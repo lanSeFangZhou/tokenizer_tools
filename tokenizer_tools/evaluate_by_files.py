@@ -26,7 +26,7 @@ def evaluate_by_files(test_file, gold_file, corpus_aligned=False):
             test_tags = encoder.encode_word_list_as_string(test_word_list)
             gold_tags = encoder.encode_word_list_as_string(gold_word_list)
 
-            tag_evaluator.process_one_paragraph(gold_tags, test_tags)
+            tag_evaluator.process_one_batch(gold_tags, test_tags)
     else:
         test_content = ' '.join([i.strip() for i in test_line_list])
         gold_content = ' '.join([i.strip() for i in gold_line_list])
@@ -37,7 +37,7 @@ def evaluate_by_files(test_file, gold_file, corpus_aligned=False):
         test_tags = encoder.encode_word_list_as_string(test_word_list)
         gold_tags = encoder.encode_word_list_as_string(gold_word_list)
 
-        tag_evaluator.process_one_paragraph(gold_tags, test_tags)
+        tag_evaluator.process_one_batch(gold_tags, test_tags)
 
     metrics = tag_evaluator.get_score()
 

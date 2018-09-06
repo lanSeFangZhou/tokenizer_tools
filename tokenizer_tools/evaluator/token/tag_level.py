@@ -4,7 +4,7 @@ class TagEvaluator:
         self.wc_of_gold = 0
         self.wc_of_correct = 0
 
-    def process_one_paragraph(self, gold_tag_list, test_tag_list, check_corpus_aligned=False):
+    def process_one_batch(self, gold_tag_list, test_tag_list, check_corpus_aligned=False):
         # type: (List[str], List[str]) -> None
 
         gold_tag_list_len = len(gold_tag_list)
@@ -79,11 +79,11 @@ class TagEvaluator:
 
 if __name__ == "__main__":
     tag_evaluator = TagEvaluator()
-    tag_evaluator.process_one_paragraph(
+    tag_evaluator.process_one_batch(
         'BMEBE',
         'BESBE'
     )
-    tag_evaluator.process_one_paragraph(
+    tag_evaluator.process_one_batch(
         'BMEBE',
         'BESBE'
     )
