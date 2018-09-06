@@ -4,8 +4,24 @@ class TagEvaluator:
         self.wc_of_gold = 0
         self.wc_of_correct = 0
 
-    def process_one_paragraph(self, gold_tag_list, test_tag_list):
-        assert len(gold_tag_list) == len(test_tag_list)
+    def process_one_paragraph(self, gold_tag_list, test_tag_list, check_corpus_aligned=False):
+        # type: (List[str], List[str]) -> None
+
+        gold_tag_list_len = len(gold_tag_list)
+        test_tag_list_len = len(test_tag_list)
+
+        if check_corpus_aligned:
+            assert gold_tag_list_len == test_tag_list_len
+        else:
+            # using gold_tag_list as gold,
+            # if test_tag_list is shorter, then padding None as tag
+            # if test_tag_list is logger, just ignore the rest
+            if test_tag_list_len < gold_tag_list_len:
+                test_tag_list.extend(
+                    [None] * (gold_tag_list_len - test_tag_list_len)
+                )
+            if test_tag_list_len > gold_tag_list_len:
+                test_tag_list = test_tag_list_len[:gold_tag_list_len + 1]
 
         tag_len = len(gold_tag_list)
         flag = True
