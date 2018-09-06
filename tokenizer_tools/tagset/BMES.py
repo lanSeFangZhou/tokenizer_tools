@@ -1,5 +1,7 @@
 class BMESEncoderDecoder:
-    def __int__(self):
+    def __int__(self, addition_m_tag_num=0):
+        # TODO: using addition_m_tag_num to
+        # generate BM1ES BM1M2S BM1M2MS tag scheme
         pass
 
     def encode_word(self, word):
