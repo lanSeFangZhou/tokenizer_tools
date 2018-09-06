@@ -26,6 +26,9 @@ class TagEvaluator:
             if test_tag_list_len > gold_tag_list_len:
                 test_tag_list = test_tag_list[:gold_tag_list_len + 1]
 
+        # no matter what, here must be true
+        assert gold_tag_list_len == test_tag_list_len
+
         tag_len = len(gold_tag_list)
         flag = True
         for i in range(tag_len):
