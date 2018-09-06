@@ -17,6 +17,9 @@ class TagEvaluator:
             # if test_tag_list is shorter, then padding None as tag
             # if test_tag_list is logger, just ignore the rest
             if test_tag_list_len < gold_tag_list_len:
+                # change str to list
+                test_tag_list = [i for i in test_tag_list]
+
                 test_tag_list.extend(
                     [None] * (gold_tag_list_len - test_tag_list_len)
                 )
