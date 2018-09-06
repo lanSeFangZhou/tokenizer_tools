@@ -2,7 +2,7 @@ from tokenizer_tools.tagset.BMES import BMESEncoderDecoder
 from tokenizer_tools.evaluator.token.tag_level import TagEvaluator
 
 
-def evaluate_by_files(test_file, gold_file):
+def evaluate_by_files_at_tag_level(test_file, gold_file):
     with open(test_file) as fd:
         test_line_list = fd.readlines()
 
