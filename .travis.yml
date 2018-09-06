@@ -25,5 +25,5 @@ deploy:
   on:
     tags: true
     branch: master
-    repo: howlandersonn/tokenizer_tools
+    repo: howl-andersonn/tokenizer_tools
     python: 3.6
