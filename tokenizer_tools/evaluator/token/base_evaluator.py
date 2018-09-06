@@ -24,7 +24,10 @@ class BaseEvaluator:
         # 查准率，召回率
         recall = self.wc_of_correct / float(self.wc_of_gold)
 
-        f1 = (2 * precision * recall) / (precision + recall)
+        precision_plus_recall = precision + recall
+
+        # prevent precision_plus_recall is 0 for some case
+        f1 = (2 * precision * recall) / precision_plus_recall if precision_plus_recall else 0
 
         metrics = {
             "RECALL": recall,
