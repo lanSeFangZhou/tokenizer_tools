@@ -24,10 +24,10 @@ class TagEvaluator:
                     [None] * (gold_tag_list_len - test_tag_list_len)
                 )
             if test_tag_list_len > gold_tag_list_len:
-                test_tag_list = test_tag_list[:gold_tag_list_len + 1]
+                test_tag_list = test_tag_list[:gold_tag_list_len]
 
         # no matter what, here must be true
-        assert gold_tag_list_len == test_tag_list_len
+        assert len(gold_tag_list) == len(test_tag_list)
 
         tag_len = len(gold_tag_list)
         flag = True
@@ -59,7 +59,8 @@ class TagEvaluator:
         print("WordCount of correct segs :", self.wc_of_correct)
 
         # 查全率
-        precision = self.wc_of_correct / float(self.wc_of_test)
+        # precision = self.wc_of_correct / float(self.wc_of_test)
+        precision = self.wc_of_correct / float(self.wc_of_gold)
         # 查准率，召回率
         recall = self.wc_of_correct / float(self.wc_of_gold)
 
