@@ -24,7 +24,7 @@ class TagEvaluator:
                     [None] * (gold_tag_list_len - test_tag_list_len)
                 )
             if test_tag_list_len > gold_tag_list_len:
-                test_tag_list = test_tag_list_len[:gold_tag_list_len + 1]
+                test_tag_list = test_tag_list[:gold_tag_list_len + 1]
 
         tag_len = len(gold_tag_list)
         flag = True
