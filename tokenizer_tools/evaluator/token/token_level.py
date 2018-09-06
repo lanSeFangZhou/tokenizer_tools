@@ -44,4 +44,3 @@ if __name__ == "__main__":
 
     score = evaluator.get_score()
     print(score)
-
