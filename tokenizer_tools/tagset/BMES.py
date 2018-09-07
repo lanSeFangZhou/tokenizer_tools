@@ -4,10 +4,7 @@ class BMESEncoderDecoder:
         # generate BM1ES BM1M2S BM1M2MS tag scheme
         self.addition_m_tag_num = addition_m_tag_num
 
-        self.encoding_table = [
-            'S',
-            'BE'
-        ]
+        self.possible_m_tag = ['M{}'.format(i+1) for i in range(self.addition_m_tag_num)] + ['M']
 
     def generate_m_tag_by_char_length(self, word_length):
         number_of_middle = word_length - 2
@@ -60,6 +57,7 @@ class BMESEncoderDecoder:
             previous_tags[:] = []
 
         word_list_slice = []
+        possible_ending_tag = self.possible_m_tag + ['E']
 
         previous_tags = []
         for i, tag in enumerate(tag_list):
@@ -72,7 +70,7 @@ class BMESEncoderDecoder:
                 if tag == 'S':
                     _process_word(word_list_slice, previous_tags, i)
             else:
-                if tag not in ('M', 'E'):
+                if tag not in possible_ending_tag:
                     raise _decoding_exception(tag_list, i)
 
                 previous_tags.append(tag)
