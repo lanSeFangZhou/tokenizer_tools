@@ -1,4 +1,4 @@
-class BaseEvaluator:
+class BaseEvaluator(object):
     def __init__(self, *args, **kwargs):
         self.wc_of_test = 0
         self.wc_of_gold = 0
