@@ -17,8 +17,8 @@ def plain_token_to_conll(plain_token_file, conll_file, tagset='BMES'):
                 conll_line.append([word, tag_code])
 
             word_list_and_tag_list = list(map(lambda x: ''.join(x), zip(*conll_line)))
-            word_tag_list = zip(word_list_and_tag_list)
+            word_tag_list = list(zip(*word_list_and_tag_list))
 
-            for id, word, tag in enumerate(word_tag_list):
+            for id, (word, tag) in enumerate(word_tag_list):
                 out_fd.write("{}\t{}\t{}\n".format(id, word, tag))
-                out_fd.write("\n")
+            out_fd.write("\n")
