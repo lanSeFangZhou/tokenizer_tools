@@ -1,7 +1,7 @@
 from tokenizer_tools.tagset import get_encoder_decoder
 
 
-def plain_token_to_conll(plain_token_file, conll_file, tagset='BMES'):
+def plain_token_to_conll(plain_token_file, conll_file, tagset='BMES', include_id=False):
     encoder_decoder = get_encoder_decoder(tagset)
 
     with open(plain_token_file) as in_fd, open(conll_file, 'wt') as out_fd:
@@ -20,5 +20,8 @@ def plain_token_to_conll(plain_token_file, conll_file, tagset='BMES'):
             word_tag_list = list(zip(*word_list_and_tag_list))
 
             for id, (word, tag) in enumerate(word_tag_list):
-                out_fd.write("{}\t{}\t{}\n".format(id, word, tag))
+                if include_id:
+                    out_fd.write("{}\t{}\t{}\n".format(id, word, tag))
+                else:
+                    out_fd.write("{}\t{}\n".format(word, tag))
             out_fd.write("\n")
