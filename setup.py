@@ -44,7 +44,14 @@ setup(
     include_package_data=True,
     keywords='tokenizer_tools',
     name='tokenizer_tools',
-    packages=find_packages(include=['tokenizer_tools', 'tokenizer_tools.*']),
+    packages=find_packages(include=[
+        'tokenizer_tools',
+        'tokenizer_tools.*',
+        'tokenizer_tools.evaluator',
+        'tokenizer_tools.evaluator.token',
+        'tokenizer_tools.tagset'
+        'tokenizer_tools.transform'
+    ]),
     setup_requires=setup_requirements,
     test_suite='tests',
     tests_require=test_requirements,
