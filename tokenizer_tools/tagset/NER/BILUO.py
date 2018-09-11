@@ -5,7 +5,7 @@ class BILUOEncoderDecoder(BaseTagSet):
     def generate_tag(self, prefix):
         if self.tag_name == 'O':
             # O tag is very special, it always return O
-            return "0"
+            return "O"
 
         return "{}-{}".format(prefix, self.tag_name)
 
