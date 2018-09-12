@@ -1,6 +1,8 @@
+from tokenizer_tools.evaluator.offset_evaluator import OffsetEvaluator
 from tokenizer_tools.evaluator.token.token_level import TokenEvaluator
 from tokenizer_tools.tagset.BMES import BMESEncoderDecoder
 from tokenizer_tools.evaluator.token.tag_level import TagEvaluator
+from tokenizer_tools.conll.reader import read_conll
 
 
 def evaluate_by_files_at_tag_level(test_file, gold_file):
@@ -48,4 +50,32 @@ def evaluate_by_files_at_token_level(test_file, gold_file):
 
     metrics = token_evaluator.get_score()
 
+    return metrics
+
+
+def evaluate_NER_by_conll(input_file, gold_column_index=1, test_column_index=2):
+    sentence_list = read_conll(input_file)
+
+    gold_tag_list = []
+    test_tag_list = []
+    for sentence in sentence_list:
+
+        sentence_gold_tag = []
+        sentence_test_tag = []
+        for item_list in sentence:
+            sentence_gold_tag.append(item_list[gold_column_index])
+            sentence_test_tag.append(item_list[test_column_index])
+
+        gold_tag_list.append(sentence_gold_tag)
+        test_tag_list.append(sentence_test_tag)
+
+    evaluator = OffsetEvaluator()
+
+    for i in range(len(gold_tag_list)):
+        evaluator.process_one_batch(
+            gold_tag_list[i],
+            test_tag_list[i]
+        )
+
+    metrics = evaluator.get_score()
     return metrics
