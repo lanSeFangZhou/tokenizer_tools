@@ -3,6 +3,7 @@ from tokenizer_tools.evaluator.token.token_level import TokenEvaluator
 from tokenizer_tools.tagset.BMES import BMESEncoderDecoder
 from tokenizer_tools.evaluator.token.tag_level import TagEvaluator
 from tokenizer_tools.conll.reader import read_conll
+from tokenizer_tools.tagset.NER.BILUO import BILUOSequenceEncoderDecoder
 
 
 def evaluate_by_files_at_tag_level(test_file, gold_file):
@@ -55,6 +56,7 @@ def evaluate_by_files_at_token_level(test_file, gold_file):
 
 def evaluate_NER_by_conll(input_file, gold_column_index=1, test_column_index=2):
     sentence_list = read_conll(input_file)
+    decoder = BILUOSequenceEncoderDecoder()
 
     gold_tag_list = []
     test_tag_list = []
@@ -72,10 +74,15 @@ def evaluate_NER_by_conll(input_file, gold_column_index=1, test_column_index=2):
     evaluator = OffsetEvaluator()
 
     for i in range(len(gold_tag_list)):
-        evaluator.process_one_batch(
-            gold_tag_list[i],
-            test_tag_list[i]
-        )
+        gold_tag = gold_tag_list[i]
+        test_tag = test_tag_list[i]
+
+        gold_tag_offset = decoder.decode_to_offset(gold_tag)
+
+        print(i)
+        test_tag_offset = decoder.decode_to_offset(test_tag)
+
+        evaluator.process_one_batch(gold_tag_offset, test_tag_offset)
 
     metrics = evaluator.get_score()
     return metrics
