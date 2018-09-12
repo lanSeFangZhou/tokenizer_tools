@@ -86,3 +86,37 @@ def evaluate_NER_by_conll(input_file, gold_column_index=1, test_column_index=2):
 
     metrics = evaluator.get_score()
     return metrics
+
+
+def evaluate_token_by_conll(input_file, gold_column_index=1, test_column_index=2):
+    sentence_list = read_conll(input_file)
+    decoder = BMESEncoderDecoder()
+
+    gold_tag_list = []
+    test_tag_list = []
+    for sentence in sentence_list:
+
+        sentence_gold_tag = []
+        sentence_test_tag = []
+        for item_list in sentence:
+            sentence_gold_tag.append(item_list[gold_column_index])
+            sentence_test_tag.append(item_list[test_column_index])
+
+        gold_tag_list.append(sentence_gold_tag)
+        test_tag_list.append(sentence_test_tag)
+
+    evaluator = OffsetEvaluator()
+
+    for i in range(len(gold_tag_list)):
+        gold_tag = gold_tag_list[i]
+        test_tag = test_tag_list[i]
+
+        gold_tag_offset = decoder.decode_tag(gold_tag)
+
+        print(i)
+        test_tag_offset = decoder.decode_tag(test_tag)
+
+        evaluator.process_one_batch(gold_tag_offset, test_tag_offset)
+
+    metrics = evaluator.get_score()
+    return metrics
