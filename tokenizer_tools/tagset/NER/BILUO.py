@@ -31,6 +31,9 @@ class BILUOSequenceEncoderDecoder(object):
 
     prefix_set = set('BILU')
 
+    def __init__(self, *args, **kwargs):
+        self.ignore_error = kwargs.get('ignore_error', True)
+
     def parse_tag(self, tag):
         if tag == self.oscar:
             return self.oscar, None
@@ -85,7 +88,10 @@ class BILUOSequenceEncoderDecoder(object):
                         (index, index + 1, tag_name)
                     )
                 else:
-                    raise ValueError("sequence: {} is not a valid tag sequence".format(sequence[:index + 1]))
+                    if not self.ignore_error:
+                        raise ValueError("sequence: {} is not a valid tag sequence".format(sequence[:index + 1]))
+                    else:
+                        continue
             else:
                 last_tag_prefix = tag_prefix_cache[-1]
 
