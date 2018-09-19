@@ -18,6 +18,10 @@ def read_conll(conll_file):
                 line = raw_line.strip()
                 item = line.split()
 
+                if not item:
+                    # skip
+                    continue
+
                 sentence.append(item)
 
             sentence_list.append(sentence)
