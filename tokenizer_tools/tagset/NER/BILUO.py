@@ -2,6 +2,9 @@ from tokenizer_tools.tagset.NER.base_tagset import BaseTagSet
 
 
 class BILUOEncoderDecoder(BaseTagSet):
+    # O is very easy confused with zero, using oscar instead in the code
+    oscar = 'O'
+
     def generate_tag(self, prefix):
         if self.tag_name == self.oscar:
             # O tag is very special, it always return O
