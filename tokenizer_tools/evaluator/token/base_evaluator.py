@@ -19,8 +19,9 @@ class BaseEvaluator(object):
         print("WordCount of correct segs :", self.wc_of_correct)
 
         # 查全率
-        # precision = self.wc_of_correct / float(self.wc_of_test)
-        precision = self.wc_of_correct / float(self.wc_of_gold)
+        precision = self.wc_of_correct / float(self.wc_of_test)
+        # precision = self.wc_of_correct / float(self.wc_of_gold)
+
         # 查准率，召回率
         recall = self.wc_of_correct / float(self.wc_of_gold)
 
