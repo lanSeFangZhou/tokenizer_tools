@@ -28,7 +28,10 @@ class BILUOEncoderDecoder(BaseTagSet):
         pass
 
     def all_tag_set(self):
-        return {self.generate_tag(i) for i in 'BILUO'}
+        tag_set = {self.generate_tag(i) for i in 'BILU'}
+        tag_set_oscar = {self.oscar}
+        tag_set.update(tag_set_oscar)
+        return tag_set
 
 
 class BILUOSequenceEncoderDecoder(object):
