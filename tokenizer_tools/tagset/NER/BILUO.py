@@ -24,6 +24,9 @@ class BILUOEncoderDecoder(BaseTagSet):
     def decode(self, sequence):
         pass
 
+    def all_tag_set(self):
+        return {self.generate_tag(i) for i in 'BILUO'}
+
 
 class BILUOSequenceEncoderDecoder(object):
     # O is very easy confused with zero, using oscar instead in the code
