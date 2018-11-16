@@ -52,6 +52,6 @@ setup(
     test_suite='tests',
     tests_require=test_requirements,
     url='https://github.com/howlandersonn/tokenizer_tools',
-    version='0.8.2',
+    version='0.9.0',
     zip_safe=False,
 )
