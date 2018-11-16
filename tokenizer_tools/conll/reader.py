@@ -1,4 +1,4 @@
-def read_conll(conll_file):
+def read_conll(conll_file, sep='\t'):
     sentence_list = []
     with open(conll_file) as fd:
         content = fd.read()
@@ -15,8 +15,9 @@ def read_conll(conll_file):
             sentence = []
             raw_line_list = raw_sentence.split('\n')
             for raw_line in raw_line_list:
-                line = raw_line.strip()
-                item = line.split()
+                line = raw_line
+                # line = raw_line.strip()
+                item = line.split(sep)
 
                 if not item:
                     # skip
