@@ -132,6 +132,13 @@ class BILUOSequenceEncoderDecoder(object):
 if __name__ == '__main__':
     decoder = BILUOSequenceEncoderDecoder()
     result = decoder.decode_to_offset(['U-XX'])
+    print(result)
+    assert result == [(0, 1, 'XX')]
+
     result = decoder.decode_to_offset(['U-XX', 'U-YY'])
+    print(result)
+    assert result == [(0, 1, 'XX'), (1, 2, 'YY')]
+
     result = decoder.decode_to_offset(['B-XX', 'I-XX', 'L-XX'])
     print(result)
+    assert result == [(0, 3, 'XX')]
