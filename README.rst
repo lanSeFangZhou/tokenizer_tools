@@ -22,6 +22,8 @@ Tokenizer Tools
 
 Tools for tokenizer develope and evaluation
 
+Tools/Utils for NLP (including dataset reading, tagset encoding & decoding, metrics computing) | NLP 工具集（包含数据集读取、tagset 编码和解码、指标的计算等）
+
 
 * Free software: MIT license
 * Documentation: https://tokenizer-tools.readthedocs.io.
@@ -31,6 +33,11 @@ Features
 --------
 
 * TODO
+
+TODO
+-----
+
+* 改变项目的名字，tokenizer_tools 已经无法正确描述现在项目的功能
 
 Credits
 -------
