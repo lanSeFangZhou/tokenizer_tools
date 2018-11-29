@@ -20,8 +20,6 @@ Tokenizer Tools
 
 
 
-Tools for tokenizer develope and evaluation
-
 Tools/Utils for NLP (including dataset reading, tagset encoding & decoding, metrics computing) | NLP 工具集（包含数据集读取、tagset 编码和解码、指标的计算等）
 
 
@@ -32,7 +30,9 @@ Tools/Utils for NLP (including dataset reading, tagset encoding & decoding, metr
 Features
 --------
 
-* TODO
+* 常见数据集格式的读取
+* 多种 Tagset 的编码和解码
+* 指标的计算
 
 TODO
 -----
