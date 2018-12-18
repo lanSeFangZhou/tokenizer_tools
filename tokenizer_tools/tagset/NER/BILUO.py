@@ -10,7 +10,13 @@ class BILUOEncoderDecoder(BaseTagSet):
             # O tag is very special, it always return O
             return self.oscar
 
-        return "{}-{}".format(prefix, self.tag_name)
+        if self.tag_name is not None:
+            tag = "{}-{}".format(prefix, self.tag_name)
+        else:
+            # if tag_name is None, no more tag_name in tag
+            tag = prefix
+
+        return tag
 
     def encode(self, sequence):
         len_of_sequence = len(sequence)
