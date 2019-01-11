@@ -9,3 +9,13 @@ def tag_collector(input_files, tag_index=1):
         all_tag_set.update(tag_set)
 
     return all_tag_set
+
+
+def collect_tag_to_file(input_files, output_file, tag_index=1):
+    all_tags = tag_collector(input_files, tag_index)
+
+    # for better human reading, sort it
+    sorted_all_tags = sorted(all_tags)
+
+    with open(output_file, 'wt') as fd:
+        fd.write('\n'.join(sorted_all_tags))
