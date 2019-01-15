@@ -15,5 +15,4 @@ def entity_vocabulary(input_files, value_index=0, entity_index=1):
 
 
 if __name__ == "__main__":
-    vocabulary = entity_vocabulary(["/Users/howl/Repositories/tools_for_corpus_of_people_daily/data/conllu/data_False-True-True-False-False-False-False.conllu"], 1, 3)
-    print()
+    pass

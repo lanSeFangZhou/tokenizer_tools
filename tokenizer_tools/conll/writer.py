@@ -10,3 +10,7 @@ def write_conll(data, output_file, blank_token='_', conll_format=False):
                 fd.write('\n')
 
             fd.write('\n')
+
+
+if __name__ == "__main__":
+    pass
