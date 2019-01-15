@@ -12,7 +12,6 @@ word_coding_pairs = (
     ('我们', 'BE'),
     ('飞机票', 'BME'),
     ('东南西北', 'BMME'),
-
 )
 
 
