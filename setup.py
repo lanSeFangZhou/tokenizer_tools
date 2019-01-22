@@ -15,7 +15,7 @@ requirements = ['Click>=6.0', 'scikit-learn', 'scipy', 'tensorflow']
 
 setup_requirements = ['pytest-runner', ]
 
-test_requirements = ['pytest', ]
+test_requirements = ['pytest', 'pytest-helpers-namespace']
 
 setup(
     author="Xiaoquan Kong",
