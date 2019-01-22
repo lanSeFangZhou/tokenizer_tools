@@ -1,4 +1,6 @@
 from tokenizer_tools.tagset.NER.base_tagset import BaseTagSet
+from tokenizer_tools.tagset.offset.sequence import Sequence
+from tokenizer_tools.tagset.offset.span import Span
 
 
 class BILUOEncoderDecoder(BaseTagSet):
@@ -133,6 +135,16 @@ class BILUOSequenceEncoderDecoder(object):
                         raise ValueError("sequence: {} is not a valid tag sequence".format(sequence[:index + 1]))
 
         return offset_list
+
+    def to_offset(self, sequence, text):
+        seq = Sequence(text)
+
+        plain_offset_list = self.decode_to_offset(sequence)
+
+        for offset in plain_offset_list:
+            seq.span_set.append(Span(offset[0], offset[1], offset[2]))
+
+        return seq
 
 
 if __name__ == '__main__':
