@@ -1,11 +1,14 @@
+from tokenizer_tools.tagset.offset.exceptions import OffsetSpanCheckError
+
+
 class Span(object):
     def __init__(self, start, end, entity, value=None, normal_value=None):
         if start < 0:
-            raise AssertionError("start index should greater or equal than zero")
+            raise OffsetSpanCheckError("start index should greater or equal than zero")
         if end <= start:
-            raise AssertionError("end is smaller than or equal to start")
+            raise OffsetSpanCheckError("end is smaller than or equal to start")
         if not entity:
-            raise AssertionError("'{}' is not a legal entity".format(entity))
+            raise OffsetSpanCheckError("'{}' is not a legal entity".format(entity))
 
         self.start = start
         self.end = end
@@ -18,7 +21,8 @@ class Span(object):
 
     def check_match(self, text):
         if self.end > len(text):
-            raise AssertionError("end index should less or equal than lenght of text")
+            # raise OffsetSpanCheckError("end index should less or equal than lenght of text")
+            return False
 
         if self.value is None:  # no value provide so skip match test
             return True

@@ -19,32 +19,34 @@ class SpanSet(list):
             itertools.combinations(self, 2)
         )
 
-        false_results = list(
-            itertools.filterfalse(
+        test_results = list(
+            map(
                 lambda x: self._are_separate(*x),
                 comb
             )
         )
 
-        if false_results:
-            # raise AssertionError("spans are overlaped; total count: {} failed".format(false_results))
-            return False
+        if not all(test_results):
+            overlapped_list = [comb[i] for i, v in enumerate(test_results) if not v]
 
-        return True
+            return False, overlapped_list
+
+        return True, []
 
     def check_match(self, text):
-        false_results = list(
-            itertools.filterfalse(
+        test_results = list(
+            map(
                 lambda x: x.check_match(text),
                 self
             )
         )
 
-        if false_results:
-            # raise AssertionError("check match failed; total count: {} failed".format(false_results))
-            return False
+        if not all(test_results):
+            mismatch_list = [self[i] for i, v in enumerate(test_results) if not v]
 
-        return True
+            return False, mismatch_list
+
+        return True, []
 
     def __eq__(self, other):
         return collections.Counter(self) == collections.Counter(other)

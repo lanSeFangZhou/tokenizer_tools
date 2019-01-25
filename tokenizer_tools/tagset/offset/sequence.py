@@ -14,7 +14,10 @@ class Sequence(object):
         pass
 
     def check_span_set(self):
-        return self.span_set.check_overlap() and self.span_set.check_match(self.text)
+        check_overlap, overlapped_result = self.span_set.check_overlap()
+        check_match, mismatch_result = self.span_set.check_match(self.text)
+
+        return check_overlap and check_match, overlapped_result, mismatch_result
 
     def __eq__(self, other):
         return self.text == other.text and self.span_set == other.span_set
