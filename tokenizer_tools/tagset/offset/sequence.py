@@ -9,6 +9,7 @@ class Sequence(object):
         self.text = text
         self.span_set = span_set or SpanSet()
         self.id = id if id is not None else uuid.uuid4()
+        self.label = None  # for feature usage
 
     def add_span(self, span):
         pass
