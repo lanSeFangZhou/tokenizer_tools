@@ -11,6 +11,11 @@ def correct_rate(labels, predictions, weights):
     weights = tf.ones_like(weights, tf.int32)
 
     labels = tf.cast(labels, tf.int32)
+    # with tf.Session() as sess:
+    #     sess.run(tf.tables_initializer())
+    #     result = sess.run((labels, weights))
+    #     print(result)
+
     label_seq = tf.multiply(labels, weights, name='labels')
 
     predictions = tf.cast(predictions, tf.int32)
