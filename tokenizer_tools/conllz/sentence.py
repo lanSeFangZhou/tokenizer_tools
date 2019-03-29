@@ -47,3 +47,10 @@ class Sentence(object):
 
     def __eq__(self, other):
         return self.id == other.id and self.word_lines == other.word_lines and self.attribute_lines == other.attribute_lines
+
+
+class SentenceX(Sentence):
+    def __init__(self, *args, **kwargs):
+        super(SentenceX, self).__init__(*args, **kwargs)
+
+        self.meta = {}
