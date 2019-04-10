@@ -23,6 +23,9 @@ class Sequence(object):
     def __eq__(self, other):
         return self.text == other.text and self.span_set == other.span_set
 
+    def __repr__(self):
+        return '{}(text={!r}, span_set={!r}, id={!r}, label={!r})'.format(self.__class__.__name__, self.text, self.span_set, self.id, self.label)
+
 
 if __name__ == "__main__":
     seq = Sequence("王小明在北京的清华大学读书。")

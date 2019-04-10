@@ -50,3 +50,6 @@ class SpanSet(list):
 
     def __eq__(self, other):
         return collections.Counter(self) == collections.Counter(other)
+
+    def __repr__(self):
+        return '{}({!r})'.format(self.__class__.__name__, list(self))
