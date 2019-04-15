@@ -34,6 +34,14 @@ class Span(object):
 
         return True
 
+    def fill_text(self, text):
+        if not self.check_match(text):
+            raise ValueError()
+
+        matched_text = text[self.start: self.end]
+
+        self.value = matched_text
+
     def __repr__(self):
         return "{}({!r}, {!r}, {!r})".format(
             self.__class__.__name__, self.start, self.end, self.entity

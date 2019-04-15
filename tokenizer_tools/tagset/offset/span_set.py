@@ -1,4 +1,5 @@
 import collections
+import copy
 import itertools
 
 from tokenizer_tools.tagset.offset.span import Span
@@ -47,6 +48,15 @@ class SpanSet(list):
             return False, mismatch_list
 
         return True, []
+
+    def fill_text(self, text):
+        flag, _ = self.check_match(text)
+
+        if not flag:
+            raise ValueError()
+
+        for span in self:
+            span.fill_text(text)
 
     def __eq__(self, other):
         return collections.Counter(self) == collections.Counter(other)
