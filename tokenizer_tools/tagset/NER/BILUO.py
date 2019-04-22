@@ -136,13 +136,15 @@ class BILUOSequenceEncoderDecoder(object):
 
         return offset_list
 
-    def to_offset(self, sequence, text):
+    def to_offset(self, sequence, text, label=None):
         seq = Sequence(text)
 
         plain_offset_list = self.decode_to_offset(sequence)
 
         for offset in plain_offset_list:
             seq.span_set.append(Span(offset[0], offset[1], offset[2]))
+
+        seq.label = label
 
         return seq
 

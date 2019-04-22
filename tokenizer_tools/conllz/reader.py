@@ -78,6 +78,17 @@ def read_conllz(input_fd):
     return sentence_list
 
 
+def read_conllx(input_fd):
+    sentence_list = []
+
+    content = input_fd.read()
+
+    for sentence in read_conllx_from_string(content):
+        sentence_list.append(sentence)
+
+    return sentence_list
+
+
 if __name__ == "__main__":
     with open('/Users/howl/Repositories/tokenizer_tools/tests/conllz/test_data/test.conllz') as fd:
         sentence = read_conllz(fd)

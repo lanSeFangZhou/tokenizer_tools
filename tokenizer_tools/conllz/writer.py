@@ -2,11 +2,12 @@ import copy
 import io
 import json
 import uuid
+from typing import List
 
-from tokenizer_tools.conllz.sentence import Sentence
+from tokenizer_tools.conllz.sentence import Sentence, SentenceX
 
 
-def write_conllx(sentence_list, output_fd):
+def write_conllx(sentence_list: List[SentenceX], output_fd):
     for sentence in sentence_list:
         sentence_id = sentence.id
 

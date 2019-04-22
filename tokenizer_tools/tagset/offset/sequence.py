@@ -5,7 +5,7 @@ from tokenizer_tools.tagset.offset.span import Span
 
 
 class Sequence(object):
-    def __init__(self, text, span_set=None, id=None, label=None):
+    def __init__(self, text, span_set: SpanSet = None, id=None, label=None):
         self.text = text
         self.span_set = span_set or SpanSet()
         self.id = id if id is not None else uuid.uuid4()
