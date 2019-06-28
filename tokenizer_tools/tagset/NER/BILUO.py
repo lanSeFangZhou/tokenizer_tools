@@ -55,7 +55,8 @@ class BILUOSequenceEncoderDecoder(object):
         if tag == self.oscar:
             return self.oscar, None
 
-        raw_prefix, raw_tag_name = tag.split('-')
+        # set maxsplit to 1, so raw_tag_name can contains '-' char legally
+        raw_prefix, raw_tag_name = tag.split('-', maxsplit=1)
 
         prefix = raw_prefix.strip()
         tag_name = raw_tag_name.strip()
