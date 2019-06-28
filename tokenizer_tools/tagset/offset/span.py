@@ -43,8 +43,8 @@ class Span(object):
         self.value = matched_text
 
     def __repr__(self):
-        return "{}({!r}, {!r}, {!r})".format(
-            self.__class__.__name__, self.start, self.end, self.entity
+        return "{}({!r}, {!r}, {!r}, value={!r}, normal_value={!r})".format(
+            self.__class__.__name__, self.start, self.end, self.entity, self.value, self.normal_value
         )
 
     def __hash__(self):
