@@ -58,6 +58,24 @@ def label_collector(input_files, tag_index=0):
     return all_tag_set
 
 
+def extra_attr_collector(input_files, extra_attr):
+    all_tag_set = set()
+    for sentence in conllx_iterator_reader(input_files):
+        offset_sentence, _ = conllx_to_offset(sentence)
+        tag_set = {offset_sentence.extra_attr[extra_attr]}
+
+        all_tag_set.update(tag_set)
+
+    return all_tag_set
+
+
+def collect_extra_attr_to_file(input_files, output_file, extra_attr):
+    all_tags = extra_attr_collector(input_files, extra_attr)
+
+    with open(output_file, 'wt') as fd:
+        fd.write('\n'.join(all_tags))
+
+
 def collect_label_to_file(input_files, output_file, tag_index=0):
     all_tags = label_collector(input_files, tag_index)
 

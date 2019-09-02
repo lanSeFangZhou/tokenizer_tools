@@ -1,3 +1,5 @@
+import copy
+
 from tokenizer_tools.conllz.sentence import Sentence, SentenceX
 from tokenizer_tools.tagset.NER.BILUO import BILUOSequenceEncoderDecoder
 from tokenizer_tools.tagset.offset.sequence import Sequence
@@ -10,8 +12,10 @@ def conllz_to_offset(sentence_data: Sentence, raise_exception=False, attr_index=
     tags_seq = sentence_data.get_attribute_by_index(attr_index)
 
     failed = False
+    meta = copy.deepcopy(sentence_data.meta)
+
     try:
-        seq = decoder.to_offset(tags_seq, input_text, label=sentence_data.meta.get('label'))
+        seq = decoder.to_offset(tags_seq, input_text, label=meta.pop('label', None), **meta)
     except:
         if not raise_exception:
             # invalid tag sequence will raise exception
@@ -31,8 +35,10 @@ def conllx_to_offset(sentence_data: SentenceX, raise_exception=False, attr_index
     tags_seq = sentence_data.get_attribute_by_index(attr_index)
 
     failed = False
+    meta = copy.deepcopy(sentence_data.meta)
+
     try:
-        seq = decoder.to_offset(tags_seq, input_text, label=sentence_data.meta.get('label'))
+        seq = decoder.to_offset(tags_seq, input_text, label=meta.pop('label', None), **meta)
     except:
         if not raise_exception:
             # invalid tag sequence will raise exception

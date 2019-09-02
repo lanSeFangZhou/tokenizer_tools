@@ -137,7 +137,7 @@ class BILUOSequenceEncoderDecoder(object):
 
         return offset_list
 
-    def to_offset(self, sequence, text, label=None):
+    def to_offset(self, sequence, text, label=None, **kwargs):
         seq = Sequence(text)
 
         plain_offset_list = self.decode_to_offset(sequence)
@@ -146,6 +146,7 @@ class BILUOSequenceEncoderDecoder(object):
             seq.span_set.append(Span(offset[0], offset[1], offset[2]))
 
         seq.label = label
+        seq.extra_attr = kwargs
 
         return seq
 
