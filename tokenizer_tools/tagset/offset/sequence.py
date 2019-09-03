@@ -8,6 +8,11 @@ class Sequence(object):
     def __init__(
         self, text, span_set: SpanSet = None, id=None, label=None, extra_attr=None
     ):
+        # TODO:
+        #   1. rename extra_attr to attr
+        #   2. move label into attr
+        #   3. span_set should include in some column data
+
         self.text = text
         self.span_set = span_set or SpanSet()
         self.id = id if id is not None else str(uuid.uuid4())
