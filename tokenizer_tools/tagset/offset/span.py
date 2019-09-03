@@ -17,7 +17,7 @@ class Span(object):
         self.normal_value = normal_value
 
     def fetch_value_from_text(self, text):
-        return text[self.start: self.end]
+        return text[self.start : self.end]
 
     def check_match(self, text):
         if self.end > len(text):
@@ -27,7 +27,7 @@ class Span(object):
         if self.value is None:  # no value provide so skip match test
             return True
 
-        matched_text = text[self.start: self.end]
+        matched_text = text[self.start : self.end]
 
         if matched_text != self.value:
             return False
@@ -38,24 +38,33 @@ class Span(object):
         if not self.check_match(text):
             raise ValueError()
 
-        matched_text = text[self.start: self.end]
+        matched_text = text[self.start : self.end]
 
         self.value = matched_text
 
     def __repr__(self):
         return "{}({!r}, {!r}, {!r}, value={!r}, normal_value={!r})".format(
-            self.__class__.__name__, self.start, self.end, self.entity, self.value, self.normal_value
+            self.__class__.__name__,
+            self.start,
+            self.end,
+            self.entity,
+            self.value,
+            self.normal_value,
         )
 
     def __hash__(self):
         return hash((self.start, self.end, self.entity))
 
     def __eq__(self, other):
-        return self.start == other.start and self.end == other.end and self.entity == other.entity
+        return (
+            self.start == other.start
+            and self.end == other.end
+            and self.entity == other.entity
+        )
 
 
 if __name__ == "__main__":
-    span = Span(0, 9, 'entity')
+    span = Span(0, 9, "entity")
     print(repr(span))
     assert repr(span) == "Span(0, 9, 'entity')"
 

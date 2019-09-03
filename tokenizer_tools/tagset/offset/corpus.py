@@ -7,7 +7,7 @@ from tokenizer_tools.converter.offset_to_sentence import offset_to_sentence
 class Corpus(list):
     @classmethod
     def read_from_file(cls, data_file):
-        with open(data_file, 'rt') as fd:
+        with open(data_file, "rt") as fd:
             sentence_list = read_conllx(fd)
 
         offset_data_list = []
@@ -21,5 +21,5 @@ class Corpus(list):
     def write_to_file(self, output_file):
         sentence_list = [offset_to_sentence(offset) for offset in self]
 
-        with open(output_file, 'wt') as fd:
+        with open(output_file, "wt") as fd:
             write_conllx(sentence_list, fd)

@@ -16,16 +16,9 @@ class SpanSet(list):
         if overlap return False, otherwise return True
         :return: bool
         """
-        comb = list(
-            itertools.combinations(self, 2)
-        )
+        comb = list(itertools.combinations(self, 2))
 
-        test_results = list(
-            map(
-                lambda x: self._are_separate(*x),
-                comb
-            )
-        )
+        test_results = list(map(lambda x: self._are_separate(*x), comb))
 
         if not all(test_results):
             overlapped_list = [comb[i] for i, v in enumerate(test_results) if not v]
@@ -35,12 +28,7 @@ class SpanSet(list):
         return True, []
 
     def check_match(self, text):
-        test_results = list(
-            map(
-                lambda x: x.check_match(text),
-                self
-            )
-        )
+        test_results = list(map(lambda x: x.check_match(text), self))
 
         if not all(test_results):
             mismatch_list = [self[i] for i, v in enumerate(test_results) if not v]
@@ -62,4 +50,4 @@ class SpanSet(list):
         return collections.Counter(self) == collections.Counter(other)
 
     def __repr__(self):
-        return '{}({!r})'.format(self.__class__.__name__, list(self))
+        return "{}({!r})".format(self.__class__.__name__, list(self))
