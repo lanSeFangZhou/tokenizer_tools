@@ -5,7 +5,7 @@ from tokenizer_tools.tagset.offset.span import Span
 
 def test_repr_():
     span = Span(0, 9, 'entity')
-    assert repr(span) == "Span(0, 9, 'entity')"
+    assert repr(span) == "Span(0, 9, 'entity', value=None, normal_value=None)"
 
 
 def test_eq_():

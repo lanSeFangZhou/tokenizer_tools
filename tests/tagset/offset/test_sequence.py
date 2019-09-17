@@ -8,13 +8,15 @@ def test_check_span_set():
     seq.span_set.append(Span(4, 6, 'GPE', '北京'))
     seq.span_set.append(Span(7, 11, 'ORG', '清华大学'))
 
-    assert seq.check_span_set()
+    result, overlapped_result, mismatch_result = seq.check_span_set()
+    assert result
     
     seq = Sequence("来一首蓝泽雨的歌。")
     seq.span_set.append(Span(3, 6, '歌手名', '蓝泽雨'))
     seq.span_set.append(Span(5, 6, '歌曲名', '雨'))
 
-    assert not seq.check_span_set()
+    result, overlapped_result, mismatch_result = seq.check_span_set()
+    assert not result
 
 
 def test_eq_():
