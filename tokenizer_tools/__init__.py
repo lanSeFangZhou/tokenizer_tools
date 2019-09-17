@@ -3,5 +3,5 @@
 """Top-level package for Tokenizer Tools."""
 
 __author__ = """Xiaoquan Kong"""
-__email__ = 'u1mail2me@gmail.com'
-__version__ = '0.15.1'
+__email__ = "u1mail2me@gmail.com"
+__version__ = "0.15.1"
