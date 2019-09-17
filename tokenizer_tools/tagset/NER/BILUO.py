@@ -146,6 +146,7 @@ class BILUOSequenceEncoderDecoder(object):
             seq.span_set.append(Span(offset[0], offset[1], offset[2]))
 
         seq.label = label
+        seq.id = kwargs.pop('id')
         seq.extra_attr = kwargs
 
         return seq

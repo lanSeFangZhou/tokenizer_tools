@@ -15,7 +15,7 @@ def conllz_to_offset(sentence_data: Sentence, raise_exception=False, attr_index=
     meta = copy.deepcopy(sentence_data.meta)
 
     try:
-        seq = decoder.to_offset(tags_seq, input_text, label=meta.pop('label', None), **meta)
+        seq = decoder.to_offset(tags_seq, input_text, label=meta.pop('label', None), id=sentence_data.id, **meta)
     except:
         if not raise_exception:
             # invalid tag sequence will raise exception
