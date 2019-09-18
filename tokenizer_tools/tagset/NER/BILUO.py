@@ -1,4 +1,5 @@
 from tokenizer_tools.tagset.NER.base_tagset import BaseTagSet
+from tokenizer_tools.tagset.exceptions import TagSetDecodeError
 from tokenizer_tools.tagset.offset.sequence import Sequence
 from tokenizer_tools.tagset.offset.span import Span
 
@@ -107,14 +108,14 @@ class BILUOSequenceEncoderDecoder(object):
                     )
                 else:
                     if not self.ignore_error:
-                        raise ValueError("sequence: {} is not a valid tag sequence".format(sequence[:index + 1]))
+                        raise TagSetDecodeError("sequence: {} is not a valid tag sequence".format(sequence[:index + 1]))
                     else:
                         continue
             else:
                 last_tag_prefix = tag_prefix_cache[-1]
 
                 if not self.is_prefix_legal(last_tag_prefix, prefix):
-                    raise ValueError(
+                    raise TagSetDecodeError(
                         "sequence: {} is not a valid tag sequence".format(
                             sequence[:index + 1]))
 
@@ -128,16 +129,16 @@ class BILUOSequenceEncoderDecoder(object):
                         tag_prefix_cache = []
                         tag_name_cache = None
                     else:
-                        raise ValueError("sequence: {} is not a valid tag sequence".format(sequence[:index + 1]))
+                        raise TagSetDecodeError("sequence: {} is not a valid tag sequence".format(sequence[:index + 1]))
                 elif prefix == 'I':
                     if tag_name_cache == tag_name:
                         tag_prefix_cache.append(prefix)
                     else:
-                        raise ValueError("sequence: {} is not a valid tag sequence".format(sequence[:index + 1]))
+                        raise TagSetDecodeError("sequence: {} is not a valid tag sequence".format(sequence[:index + 1]))
 
         return offset_list
 
-    def to_offset(self, sequence, text, label=None, **kwargs):
+    def to_offset(self, sequence, text, **kwargs):
         seq = Sequence(text)
 
         plain_offset_list = self.decode_to_offset(sequence)
@@ -145,8 +146,8 @@ class BILUOSequenceEncoderDecoder(object):
         for offset in plain_offset_list:
             seq.span_set.append(Span(offset[0], offset[1], offset[2]))
 
-        seq.label = label
-        seq.id = kwargs.pop('id')
+        seq.label = kwargs.pop('label', None)
+        seq.id = kwargs.pop('id', None)
         seq.extra_attr = kwargs
 
         return seq
