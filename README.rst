@@ -6,7 +6,7 @@ Tokenizer Tools
 .. image:: https://img.shields.io/pypi/v/tokenizer_tools.svg
         :target: https://pypi.python.org/pypi/tokenizer_tools
 
-.. image:: https://img.shields.io/travis/howlandersonn/tokenizer_tools.svg
+.. image:: https://travis-ci.com/howl-anderson/tokenizer_tools.svg?branch=master
         :target: https://travis-ci.com/howl-anderson/tokenizer_tools
 
 .. image:: https://readthedocs.org/projects/tokenizer-tools/badge/?version=latest
