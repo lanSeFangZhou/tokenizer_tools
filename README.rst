@@ -7,7 +7,7 @@ Tokenizer Tools
         :target: https://pypi.python.org/pypi/tokenizer_tools
 
 .. image:: https://img.shields.io/travis/howlandersonn/tokenizer_tools.svg
-        :target: https://travis-ci.org/howlandersonn/tokenizer_tools
+        :target: https://travis-ci.com/howl-anderson/tokenizer_tools
 
 .. image:: https://readthedocs.org/projects/tokenizer-tools/badge/?version=latest
         :target: https://tokenizer-tools.readthedocs.io/en/latest/?badge=latest
