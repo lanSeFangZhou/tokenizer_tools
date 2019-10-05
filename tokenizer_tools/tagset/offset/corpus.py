@@ -1,10 +1,13 @@
+import typing
+
 from tokenizer_tools.conllz.reader import read_conllx
 from tokenizer_tools.conllz.writer import write_conllx
 from tokenizer_tools.converter.conllz_to_offset import conllz_to_offset
 from tokenizer_tools.converter.offset_to_sentence import offset_to_sentence
+from tokenizer_tools.tagset.offset.sequence import Sequence
 
 
-class Corpus(list):
+class Corpus(typing.List[Sequence]):
     @classmethod
     def read_from_file(cls, data_file):
         with open(data_file, "rt") as fd:

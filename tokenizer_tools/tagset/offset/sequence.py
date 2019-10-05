@@ -1,4 +1,5 @@
 import uuid
+from typing import Union, Any, Mapping, List
 
 from tokenizer_tools.tagset.offset.span_set import SpanSet
 from tokenizer_tools.tagset.offset.span import Span
@@ -6,12 +7,21 @@ from tokenizer_tools.tagset.offset.span import Span
 
 class Sequence(object):
     def __init__(
-        self, text, span_set: SpanSet = None, id=None, label=None, extra_attr=None
+        self,
+        text: Union[List[str], str],
+        span_set: SpanSet = None,
+        id: Union[str, None] = None,
+        label: Union[str, None] = None,
+        extra_attr: Union[Mapping[str, Any], None]=None,
     ):
         # TODO:
         #   1. rename extra_attr to attr
         #   2. move label into attr
         #   3. span_set should include in some column data
+
+        # convert text from string to list, if needed
+        if isinstance(text, str):
+            text = list(i for i in text)
 
         self.text = text
         self.span_set = span_set or SpanSet()

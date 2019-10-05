@@ -3,6 +3,7 @@ import copy
 from tokenizer_tools.conllz.sentence import Sentence, SentenceX
 from tokenizer_tools.tagset.NER.BILUO import BILUOSequenceEncoderDecoder
 from tokenizer_tools.tagset.offset.sequence import Sequence
+from tokenizer_tools.tagset.exceptions import TagSetDecodeError
 
 
 def conllz_to_offset(sentence_data: Sentence, raise_exception=False, attr_index=0):
@@ -16,7 +17,7 @@ def conllz_to_offset(sentence_data: Sentence, raise_exception=False, attr_index=
 
     try:
         seq = decoder.to_offset(tags_seq, input_text, label=meta.pop('label', None), id=sentence_data.id, **meta)
-    except:
+    except TagSetDecodeError as e:
         if not raise_exception:
             # invalid tag sequence will raise exception
             # so return a empty result
@@ -39,7 +40,7 @@ def conllx_to_offset(sentence_data: SentenceX, raise_exception=False, attr_index
 
     try:
         seq = decoder.to_offset(tags_seq, input_text, label=meta.pop('label', None), **meta)
-    except:
+    except TagSetDecodeError as e:
         if not raise_exception:
             # invalid tag sequence will raise exception
             # so return a empty result
