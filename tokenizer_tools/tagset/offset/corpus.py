@@ -8,6 +8,11 @@ from tokenizer_tools.tagset.offset.sequence import Sequence
 
 
 class Corpus(typing.List[Sequence]):
+    """
+
+    Follow method have same behavior (see https://docs.python.org/3.6/library/stdtypes.html#set) with set type:
+        isdisjoint, issubset, issuperset, union, intersection, difference, symmetric_difference
+    """
     @classmethod
     def read_from_file(cls, data_file):
         with open(data_file, "rt") as fd:
@@ -26,3 +31,30 @@ class Corpus(typing.List[Sequence]):
 
         with open(output_file, "wt") as fd:
             write_conllx(sentence_list, fd)
+
+    def __hash__(self):
+        return hash(frozenset(self))
+
+    def __eq__(self, other):
+        return frozenset(self) == frozenset(other)
+
+    def isdisjoint(self, other):
+        pass
+
+    def issubset(self, other):
+        pass
+
+    def issuperset(self, other):
+        pass
+
+    def union(self, *others):
+        pass
+
+    def intersection(self, *others):
+        pass
+
+    def difference(self, *others):
+        pass
+
+    def symmetric_difference(self, other):
+        pass

@@ -48,6 +48,9 @@ class Sequence(object):
             and self.extra_attr == other.extra_attr
         )
 
+    def __hash__(self):
+        return hash((frozenset(self.text), self.span_set, self.label))
+
     def __repr__(self):
         return "{}(text={!r}, span_set={!r}, id={!r}, label={!r}, extra_attr={!r})".format(
             self.__class__.__name__,

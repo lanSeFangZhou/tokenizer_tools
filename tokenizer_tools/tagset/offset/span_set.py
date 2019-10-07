@@ -1,11 +1,12 @@
 import collections
 import copy
 import itertools
+from typing import List
 
 from tokenizer_tools.tagset.offset.span import Span
 
 
-class SpanSet(list):
+class SpanSet(List[Span]):
     @staticmethod
     def _are_separate(r: Span, s: Span) -> bool:
         # learned from https://stackoverflow.com/questions/27182137/check-if-two-lines-each-with-start-end-positions-overlap-in-python
@@ -45,6 +46,9 @@ class SpanSet(list):
 
         for span in self:
             span.fill_text(text)
+
+    def __hash__(self):
+        return hash(frozenset(self))
 
     def __eq__(self, other):
         return collections.Counter(self) == collections.Counter(other)
