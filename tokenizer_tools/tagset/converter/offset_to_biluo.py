@@ -1,9 +1,17 @@
+from typing import List
+
 from tokenizer_tools.tagset.NER.BILUO import BILUOEncoderDecoder
 from tokenizer_tools.tagset.offset.sequence import Sequence
 from tokenizer_tools.tagset.offset.span import Span
 
 
-def offset_to_biluo(sequence):
+def offset_to_biluo(sequence: Sequence) -> List[str]:
+    """
+    Convert Sequence object to BILUO string
+
+    :param sequence: Sequence example
+    :return: string of BILUO encoding
+    """
     encoding = ['O'] * len(sequence.text)
 
     for span in sequence.span_set:

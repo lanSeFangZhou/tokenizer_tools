@@ -2,6 +2,10 @@ import uuid
 
 
 class Sentence(object):
+    """
+    A file oriented format for store any sequence corpus data.
+    """
+
     def __init__(self, word_lines=None, attribute_lines=None, attribute_names=None, id=None):
         self.word_lines = word_lines if word_lines else []
         self.attribute_lines = attribute_lines if attribute_lines else []

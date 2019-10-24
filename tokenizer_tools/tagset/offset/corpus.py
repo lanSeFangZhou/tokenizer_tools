@@ -9,10 +9,19 @@ from tokenizer_tools.tagset.offset.sequence import Sequence
 
 class Corpus(typing.List[Sequence]):
     """
+    This Corpus means a single corpus object.
+     single corpus file can stored in single file (implemented already)
+      or multiple files (not implemented yet).
 
-    Follow method have same behavior (see https://docs.python.org/3.6/library/stdtypes.html#set) with set type:
+    a single corpus object contains any number of example. example is the basic unit for model training/evaluate/test.
+
+    The corpus object is a list-like object. it has all the methods and attributes a list should have.
+     the only constraint is that the basic element/item in this list container is example.
+
+    TODO: also it should have same behavior (see https://docs.python.org/3.6/library/stdtypes.html#set) with set type:
         isdisjoint, issubset, issuperset, union, intersection, difference, symmetric_difference
     """
+
     @classmethod
     def read_from_file(cls, data_file):
         with open(data_file, "rt") as fd:

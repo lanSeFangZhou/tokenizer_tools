@@ -1,3 +1,7 @@
+from tokenizer_tools.utils.deprecated_support import deprecated_support
+
+
+@deprecated_support()
 def read_conll_iterator(conll_file):
     with open(conll_file) as fd:
         while True:

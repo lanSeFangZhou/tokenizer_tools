@@ -1,3 +1,7 @@
+from tokenizer_tools.utils.deprecated_support import deprecated_support
+
+
+@deprecated_support()
 def read_conll(conll_file, sep='\t'):
     sentence_list = []
     with open(conll_file) as fd:

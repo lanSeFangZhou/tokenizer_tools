@@ -1,6 +1,8 @@
 from tokenizer_tools.conll.iterator_reader import iterator_reader
+from tokenizer_tools.utils.deprecated_support import deprecated_support
 
 
+@deprecated_support()
 def tag_collector(input_files, tag_index=1):
     all_tag_set = set()
     for sentence in iterator_reader(input_files):

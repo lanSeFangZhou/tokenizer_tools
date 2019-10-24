@@ -6,6 +6,15 @@ from tokenizer_tools.tagset.offset.span import Span
 
 
 class Sequence(object):
+    """
+    A implement of example which means this object is the basic element of model/training/test
+
+    A sequence object has `text`, `span_set`, `id`, `label`, `extra_attr`.
+    * `text` is a list of str (single char for char level application, multi char string for word level application)
+    * `span_set` is a sparse annotation of this sequence.
+    * `id` is the unique id of this sequence, can be used for tracing.
+    * `label` the label of this sequence, used for classification.
+    """
     def __init__(
         self,
         text: Union[List[str], str],
@@ -36,6 +45,10 @@ class Sequence(object):
         pass
 
     def check_span_set(self):
+        """
+        Check if span set match with sequence
+        :return: bool
+        """
         check_overlap, overlapped_result = self.span_set.check_overlap()
         check_match, mismatch_result = self.span_set.check_match(self.text)
 

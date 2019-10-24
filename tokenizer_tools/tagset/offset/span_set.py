@@ -7,6 +7,11 @@ from tokenizer_tools.tagset.offset.span import Span
 
 
 class SpanSet(List[Span]):
+    """
+    A annotation for example is a SpanSet.
+     SpanSet is a unordered list. each element is a span which is basic annotaion unit.
+    """
+
     @staticmethod
     def _are_separate(r: Span, s: Span) -> bool:
         # learned from https://stackoverflow.com/questions/27182137/check-if-two-lines-each-with-start-end-positions-overlap-in-python

@@ -1,4 +1,11 @@
+from typing import List
+
+
 class BMESEncoderDecoder:
+    """
+    Encoder and Decoder for BMES tag scheme
+    """
+
     def __init__(self, addition_m_tag_num=0):
         # TODO: using addition_m_tag_num to
         # generate BM1ES BM1M2S BM1M2MS tag scheme
@@ -19,15 +26,25 @@ class BMESEncoderDecoder:
 
         return addition_m + padding_m
 
-    def encode_word(self, word):
-        # type: (str) -> str
+    def encode_word(self, word: str) -> str:
+        """
+        encode a word to BMES scheme as string
+
+        :param word: string
+        :return: string
+        """
 
         tag_list = self.encode_word_by_tag_list(word)
 
         return "".join(tag_list)
 
-    def encode_word_by_tag_list(self, word):
-        # type: (str) -> List[str]
+    def encode_word_by_tag_list(self, word: str) -> List[str]:
+        """
+        encode a word to BEMS scheme as list of string
+
+        :param word: string
+        :return: List[str]
+        """
 
         len_of_word = len(word)
 
@@ -37,9 +54,7 @@ class BMESEncoderDecoder:
         if len_of_word >= 2:
             return ["B"] + self.generate_m_tag_by_char_length(len_of_word) + ["E"]
 
-    def encode_word_list(self, word_list):
-        # type: (List[str]) -> List(str)
-
+    def encode_word_list(self, word_list: List[str]) -> List[str]:
         return [self.encode_word(i) for i in word_list]
 
     def encode_word_list_as_string(self, word_list):

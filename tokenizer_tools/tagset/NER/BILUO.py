@@ -5,6 +5,10 @@ from tokenizer_tools.tagset.offset.span import Span
 
 
 class BILUOEncoderDecoder(BaseTagSet):
+    """
+    Encoder and Decoder for BILUO scheme
+    """
+
     # O is very easy confused with zero, using oscar instead in the code
     oscar = 'O'
 

@@ -4,6 +4,10 @@ from tokenizer_tools.conll.iterator_reader import iterator_reader
 
 
 def entity_vocabulary(input_files, value_index=0, entity_index=1):
+    """"
+    A helper function to help collect all the entity in corpus files.
+    """
+
     all_vocabulary_set = collections.defaultdict(list)
     for sentence in iterator_reader(input_files):
         entity_set = {i[value_index]: i[entity_index] for i in sentence}

@@ -1,8 +1,10 @@
 import collections
 
 from tokenizer_tools.conll.iterator_reader import iterator_reader
+from tokenizer_tools.utils.deprecated_support import deprecated_support
 
 
+@deprecated_support()
 def entity_vocabulary(input_files, value_index=0, entity_index=1):
     all_vocabulary_set = collections.defaultdict(list)
     for sentence in iterator_reader(input_files):

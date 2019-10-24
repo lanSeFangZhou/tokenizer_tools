@@ -1,3 +1,7 @@
+from tokenizer_tools.utils.deprecated_support import deprecated_support
+
+
+@deprecated_support()
 def write_conll(data, output_file, blank_token='_', conll_format=False):
     with open(output_file, 'wt') as fd:
         for raw_sentence in data:

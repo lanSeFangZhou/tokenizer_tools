@@ -2,6 +2,10 @@ from tokenizer_tools.tagset.offset.exceptions import OffsetSpanCheckError
 
 
 class Span(object):
+    """
+    Basic unit for annotation. A span has `start`, `end`, `entity`, `value`.
+    """
+
     def __init__(self, start, end, entity, value=None, normal_value=None):
         if start < 0:
             raise OffsetSpanCheckError("start index should greater or equal than zero")
