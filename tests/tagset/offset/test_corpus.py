@@ -35,3 +35,21 @@ def test_write_to_file(datadir, tmpdir):
     gold_file = datadir / 'output.conllx'
 
     assert filecmp.cmp(result_file, gold_file)
+
+
+def test_getitem(datadir, tmpdir):
+    corpus = Corpus()
+
+    corpus.append(seq_one)
+    corpus.append(seq_two)
+
+    # test single element get item
+    item = corpus[0]
+
+    assert item == seq_one
+
+    # test batch element get item
+    other_corpus = corpus[[0, 1]]
+
+    assert other_corpus == corpus
+

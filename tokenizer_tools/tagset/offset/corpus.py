@@ -1,4 +1,7 @@
 import typing
+from typing import Union
+
+import numpy as np
 
 from tokenizer_tools.conllz.reader import read_conllx
 from tokenizer_tools.conllz.writer import write_conllx
@@ -46,6 +49,16 @@ class Corpus(typing.List[Sequence]):
 
     def __eq__(self, other):
         return frozenset(self) == frozenset(other)
+
+    def __getitem__(self, item) -> Union[Sequence, "Corpus"]:
+        if isinstance(item, (np.ndarray, list)):
+            subset = []
+            for i in item:
+                subset.append(self[i])
+
+            return self.__class__(subset)
+        else:
+            return super().__getitem__(item)
 
     def isdisjoint(self, other):
         pass
