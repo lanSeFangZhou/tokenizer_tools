@@ -1,7 +1,7 @@
-import typing
-from typing import Union
+from typing import Union, List, Tuple
 
 import numpy as np
+from sklearn.model_selection import train_test_split
 
 from tokenizer_tools.conllz.reader import read_conllx
 from tokenizer_tools.conllz.writer import write_conllx
@@ -10,7 +10,7 @@ from tokenizer_tools.converter.offset_to_sentence import offset_to_sentence
 from tokenizer_tools.tagset.offset.sequence import Sequence
 
 
-class Corpus(typing.List[Sequence]):
+class Corpus(List[Sequence]):
     """
     This Corpus means a single corpus object.
      single corpus file can stored in single file (implemented already)
@@ -43,6 +43,16 @@ class Corpus(typing.List[Sequence]):
 
         with open(output_file, "wt") as fd:
             write_conllx(sentence_list, fd)
+
+    def train_test_split(self, **kwargs) -> Tuple["Corpus", "Corpus"]:
+        """
+        split corpus into train set and test set
+        :param kwargs: kwargs passed directly to sklearn.model_selection.train_test_split
+        :return: train_corpus, test_corpus
+        """
+        train_set, test_set = train_test_split(self, **kwargs)
+
+        return Corpus(train_set), Corpus(test_set)
 
     def __hash__(self):
         return hash(frozenset(self))
