@@ -63,6 +63,8 @@ Features
 
 .. code-block:: python
 
+    from tokenizer_tools.tagset.offset.corpus import Corpus
+
     corpus_list = [corpus_item_one, corpus_item_two]
 
     corpus = Corpus(corpus_list)
