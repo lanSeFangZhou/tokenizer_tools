@@ -1,11 +1,11 @@
 from typing import List
 
 from tokenizer_tools.tagset.NER.BILUO import BILUOEncoderDecoder
-from tokenizer_tools.tagset.offset.sequence import Sequence
+from tokenizer_tools.tagset.offset.document import Document
 from tokenizer_tools.tagset.offset.span import Span
 
 
-def offset_to_biluo(sequence: Sequence) -> List[str]:
+def offset_to_biluo(sequence: Document) -> List[str]:
     """
     Convert Sequence object to BILUO string
 
@@ -25,7 +25,7 @@ def offset_to_biluo(sequence: Sequence) -> List[str]:
 
 
 if __name__ == "__main__":
-    seq = Sequence("王小明在北京的清华大学读书。")
+    seq = Document("王小明在北京的清华大学读书。")
     seq.span_set.append(Span(0, 3, 'PERSON', '王小明'))
     seq.span_set.append(Span(4, 6, 'GPE', '北京'))
     seq.span_set.append(Span(7, 11, 'ORG', '清华大学'))

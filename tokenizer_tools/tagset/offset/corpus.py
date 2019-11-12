@@ -7,10 +7,10 @@ from tokenizer_tools.conllz.reader import read_conllx
 from tokenizer_tools.conllz.writer import write_conllx
 from tokenizer_tools.converter.conllz_to_offset import conllz_to_offset
 from tokenizer_tools.converter.offset_to_sentence import offset_to_sentence
-from tokenizer_tools.tagset.offset.sequence import Sequence
+from tokenizer_tools.tagset.offset.document import Document
 
 
-class Corpus(List[Sequence]):
+class Corpus(List[Document]):
     """
     This Corpus means a single corpus object.
      single corpus file can stored in single file (implemented already)
@@ -60,7 +60,7 @@ class Corpus(List[Sequence]):
     def __eq__(self, other):
         return frozenset(self) == frozenset(other)
 
-    def __getitem__(self, item) -> Union[Sequence, "Corpus"]:
+    def __getitem__(self, item) -> Union[Document, "Corpus"]:
         if isinstance(item, (np.ndarray, list)):
             subset = []
             for i in item:
@@ -90,3 +90,8 @@ class Corpus(List[Sequence]):
 
     def symmetric_difference(self, other):
         pass
+
+    def remove_duplicate(self) -> "Corpus":
+        set_corpus = set(self)
+        duplicate_free_corpus = self.__class__(set_corpus)
+        return duplicate_free_corpus

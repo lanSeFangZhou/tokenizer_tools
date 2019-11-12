@@ -1,12 +1,13 @@
 import copy
+from typing import Tuple
 
 from tokenizer_tools.conllz.sentence import Sentence, SentenceX
 from tokenizer_tools.tagset.NER.BILUO import BILUOSequenceEncoderDecoder
-from tokenizer_tools.tagset.offset.sequence import Sequence
+from tokenizer_tools.tagset.offset.document import Document
 from tokenizer_tools.tagset.exceptions import TagSetDecodeError
 
 
-def conllz_to_offset(sentence_data: Sentence, raise_exception=False, attr_index=0):
+def conllz_to_offset(sentence_data: Sentence, raise_exception=False, attr_index=0) -> Tuple[Document, bool]:
     decoder = BILUOSequenceEncoderDecoder()
 
     input_text = sentence_data.word_lines
@@ -21,7 +22,7 @@ def conllz_to_offset(sentence_data: Sentence, raise_exception=False, attr_index=
         if not raise_exception:
             # invalid tag sequence will raise exception
             # so return a empty result
-            seq = Sequence(input_text)
+            seq = Document(input_text)
             failed = True
         else:
             raise
@@ -44,7 +45,7 @@ def conllx_to_offset(sentence_data: SentenceX, raise_exception=False, attr_index
         if not raise_exception:
             # invalid tag sequence will raise exception
             # so return a empty result
-            seq = Sequence(input_text)
+            seq = Document(input_text)
             failed = True
         else:
             raise

@@ -1,6 +1,6 @@
 from tokenizer_tools.tagset.NER.base_tagset import BaseTagSet
 from tokenizer_tools.tagset.exceptions import TagSetDecodeError
-from tokenizer_tools.tagset.offset.sequence import Sequence
+from tokenizer_tools.tagset.offset.document import Document
 from tokenizer_tools.tagset.offset.span import Span
 
 
@@ -143,7 +143,7 @@ class BILUOSequenceEncoderDecoder(object):
         return offset_list
 
     def to_offset(self, sequence, text, **kwargs):
-        seq = Sequence(text)
+        seq = Document(text)
 
         plain_offset_list = self.decode_to_offset(sequence)
 
