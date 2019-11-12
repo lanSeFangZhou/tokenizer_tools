@@ -34,6 +34,52 @@ Features
 * 多种 Tagset 的编码和解码
 * 指标的计算
 
+功能
+---
+
+语料集读写
+^^^^^^^^^^^
+本软件提供了一种语料存储的磁盘文件格式（暂定名为 conllx）和内存对象格式（暂定名为 offset）。
+
+语料集读取
+"""""""""""
+任务：读取 corpus.collx 文件，遍历打印每一条语料。
+
+代码：
+
+.. code-block:: python
+
+    from tokenizer_tools.tagset.offset.corpus import Corpus
+
+    corpus = Corpus.read_from_file("corpus.conllx")
+    for document in corpus:
+        print(document)  # document 就是单条语料对象
+
+语料集写入
+"""""""""""
+任务：将多条语料写入 corpus.conllx 文件
+
+代码：
+
+.. code-block:: python
+
+    corpus_list = [corpus_item_one, corpus_item_two]
+
+    corpus = Corpus(corpus_list)
+    corpus.write_to_file("corpus.conllx")
+
+语料属性和方法
+^^^^^^^^^^^^^^^^^
+每一个单条语料都是一个 offset sequence 对象，现在介绍这个对象所拥有的属性和方法
+
+属性
+""""""
+TODO
+
+方法
+""""
+TODO
+
 TODO
 -----
 
