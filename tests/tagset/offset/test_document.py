@@ -2,7 +2,7 @@ from tokenizer_tools.tagset.offset.corpus import Corpus
 
 
 def test_attr_access(datadir):
-    corpus = Corpus.read_from_file(datadir / 'corpus.conllx')
+    corpus = Corpus.read_from_file(datadir / "corpus.conllx")
     doc = corpus[0]
 
     assert doc.domain == "domain"
@@ -12,7 +12,7 @@ def test_attr_access(datadir):
 
 
 def test_attr_change(datadir, tmpdir):
-    corpus = Corpus.read_from_file(datadir / 'corpus.conllx')
+    corpus = Corpus.read_from_file(datadir / "corpus.conllx")
     doc = corpus[0]
 
     # change attr
@@ -22,7 +22,7 @@ def test_attr_change(datadir, tmpdir):
     doc.sub_function = "SUB_FUNCTION"
 
     # write out
-    output_file  = tmpdir / "data.conllx"
+    output_file = tmpdir / "data.conllx"
     corpus.write_to_file(output_file)
 
     # read in
@@ -34,3 +34,18 @@ def test_attr_change(datadir, tmpdir):
     assert check_doc.function == "FUNCTION"
     assert check_doc.intent == "INTENT"
     assert check_doc.sub_function == "SUB_FUNCTION"
+
+
+def test_as_string(datadir):
+    corpus = Corpus.read_from_file(datadir / "corpus.conllx")
+    doc = corpus[0]
+
+    doc_string = str(doc)
+
+    expected_doc_string = (
+        "<D: domain, F: function, S: sub_function, I: intent>"
+        "    "
+        "[王 小 明](PERSON) 在 [北 京](GPE) 的 [清 华 大 学](ORG) 读 书 。"
+    )
+
+    assert doc_string == expected_doc_string

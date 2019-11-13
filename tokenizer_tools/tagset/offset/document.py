@@ -1,3 +1,5 @@
+import copy
+
 from tokenizer_tools.tagset.offset.sequence import Sequence
 
 
@@ -41,3 +43,21 @@ class Document(Sequence):
     @entities.setter
     def entities(self, entities):
         self.span_set = entities
+
+    def convert_to_md(self) -> str:
+        text_list = copy.deepcopy(self.text)
+
+        for span in self.entities:
+            text_list[span.start] = "[" + text_list[span.start]
+            text_list[span.end - 1] = text_list[span.end - 1] + "]({})".format(span.entity)
+
+        return " ".join(text_list)
+
+    def __str__(self):
+        return "<D: {domain}, F: {function}, S: {sub_function}, I: {intent}>    {body}".format(
+            domain=self.domain,
+            function=self.function,
+            sub_function=self.sub_function,
+            intent=self.intent,
+            body=self.convert_to_md(),
+        )
