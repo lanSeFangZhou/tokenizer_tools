@@ -49,7 +49,9 @@ class Document(Sequence):
 
         for span in self.entities:
             text_list[span.start] = "[" + text_list[span.start]
-            text_list[span.end - 1] = text_list[span.end - 1] + "]({})".format(span.entity)
+            text_list[span.end - 1] = text_list[span.end - 1] + "]({})".format(
+                span.entity
+            )
 
         return " ".join(text_list)
 
@@ -61,3 +63,6 @@ class Document(Sequence):
             intent=self.intent,
             body=self.convert_to_md(),
         )
+
+    def compare_entities(self, other):
+        return self.text == other.text and self.span_set == other.span_set
