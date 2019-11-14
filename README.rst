@@ -32,7 +32,7 @@ Features
 *********
 
 * 常见数据集格式的读取
-* 多种 Tagset 的编码和解码
+* 多种 Tagset 的编码和解码 [`BMES 体系 <tokenizer_tools/tagset/BMES.py>`_, `BILUO 体系 <tokenizer_tools/tagset/NER/BILUO.py>`_, `IOB 体系 <tokenizer_tools/tagset/NER/IOB.py>`_]
 * 指标的计算
 
 *******
