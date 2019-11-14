@@ -1,6 +1,6 @@
-===============
+################
 Tokenizer Tools
-===============
+################
 
 
 .. image:: https://img.shields.io/pypi/v/tokenizer_tools.svg
@@ -27,22 +27,25 @@ Tools/Utils for NLP (including dataset reading, tagset encoding & decoding, metr
 * Documentation: https://tokenizer-tools.readthedocs.io.
 
 
+*********
 Features
---------
+*********
 
 * 常见数据集格式的读取
 * 多种 Tagset 的编码和解码
 * 指标的计算
 
+*******
 功能
-----
+*******
 
 语料集读写
-^^^^^^^^^^^
+============
+
 本软件提供了一种语料存储的磁盘文件格式（暂定名为 conllx）和内存对象格式（暂定名为 offset）。
 
 语料集读取
-"""""""""""
+------------
 任务：读取 corpus.collx 文件，遍历打印每一条语料。
 
 代码：
@@ -56,7 +59,7 @@ Features
         print(document)  # document 就是单条语料对象
 
 语料集写入
-"""""""""""
+-----------
 任务：将多条语料写入 corpus.conllx 文件
 
 代码：
@@ -70,25 +73,95 @@ Features
     corpus = Corpus(corpus_list)
     corpus.write_to_file("corpus.conllx")
 
-语料属性和方法
-^^^^^^^^^^^^^^^^^
-每一个单条语料都是一个 offset sequence 对象，现在介绍这个对象所拥有的属性和方法
+Document 属性和方法
+=======================
+
+每一个单条语料都是一个 Document 对象，现在介绍这个对象所拥有的属性和方法
 
 属性
-""""""
-TODO
+-----------
+
+text
+^^^^^^^^^^^
+类型是 list， 代表文本的字段
+
+domain
+^^^^^^^^^^^
+类型是 string， 代表领域
+
+function
+^^^^^^^^^^^^
+类型是 string， 代表功能点
+
+sub_function
+^^^^^^^^^^^^^^^^^^
+类型是 string，代表子功能点
+
+intent
+^^^^^^^^^^^^
+类型是 string， 代表意图
+
+entities
+^^^^^^^^^^^^^^
+类型是 SpanSet， 代表实体，下文有详细介绍
 
 方法
-""""
-TODO
+------------
 
+compare_entities
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+比较文本和实体是否匹配
+
+convert_to_md
+^^^^^^^^^^^^^^^^^^^^^
+将文本和实体转换成 markdown 格式，用于文本化渲染输出
+
+
+SpanSet 属性和方法
+====================
+
+方法
+------
+
+__iter__
+^^^^^^^^^^^^^^^
+可以像列表一样访问，得到的每一个元素都是 Span 对象
+
+check_overlap
+^^^^^^^^^^^^^^^^^^^^^^
+检查 span 是否重叠
+
+Span 属性和方法
+=============================
+
+属性
+-------
+
+start
+^^^^^^^^^^^
+int, 从 0 开始，包含该位置
+
+end
+^^^^^^^^
+int， 从0开始，不包含该位置
+
+entity
+^^^^^^^^^^^^
+string， 实体类型
+
+value
+^^^^^^^^^^^^^
+string， 实体的值
+
+******
 TODO
------
+******
 
 * 改变项目的名字，tokenizer_tools 已经无法正确描述现在项目的功能
 
+*********
 Credits
--------
+*********
 
 This package was created with Cookiecutter_ and the `audreyr/cookiecutter-pypackage`_ project template.
 
