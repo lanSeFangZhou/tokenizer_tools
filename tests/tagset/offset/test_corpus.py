@@ -61,5 +61,6 @@ def test_remove_duplicate(datadir):
 
     duplicate_free = corpus.remove_duplicate()
 
+    assert isinstance(duplicate_free, Corpus)
     assert len(duplicate_free) == 2
 
