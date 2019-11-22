@@ -7,6 +7,7 @@ from tokenizer_tools.conllz.reader import read_conllx
 from tokenizer_tools.conllz.writer import write_conllx
 from tokenizer_tools.converter.conllz_to_offset import conllz_to_offset
 from tokenizer_tools.converter.offset_to_sentence import offset_to_sentence
+from tokenizer_tools.tagset.offset.corpus_statistics import CorpusStatistics
 from tokenizer_tools.tagset.offset.document import Document
 
 
@@ -95,3 +96,6 @@ class Corpus(List[Document]):
         set_corpus = set(self)
         duplicate_free_corpus = self.__class__(set_corpus)
         return duplicate_free_corpus
+
+    def generate_statistics(self) -> CorpusStatistics:
+        return CorpusStatistics.create_from_corpus(self)
