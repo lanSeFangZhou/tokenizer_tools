@@ -2,7 +2,8 @@
 Usage
 =====
 
-To use Tokenizer Tools in a project::
+To use Tokenizer Tools in a project:
+
 .. code-block:: bash
 
     import tokenizer_tools
