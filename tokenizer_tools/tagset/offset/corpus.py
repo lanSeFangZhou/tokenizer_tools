@@ -1,4 +1,4 @@
-from typing import Union, List, Tuple
+from typing import Union, List, Tuple, Callable
 
 import numpy as np
 from sklearn.model_selection import train_test_split
@@ -54,6 +54,14 @@ class Corpus(List[Document]):
         train_set, test_set = train_test_split(self, **kwargs)
 
         return Corpus(train_set), Corpus(test_set)
+
+    def set_document_compare_method(self, compare_method: Callable[["Sequence", "Sequence"], bool]):
+        for document in self:
+            document.set_compare_method(compare_method)
+
+    def set_document_hash_method(self, hash_method: Callable[["Sequence"], int]):
+        for document in self:
+            document.set_hash_method(hash_method)
 
     def __hash__(self):
         return hash(frozenset(self))

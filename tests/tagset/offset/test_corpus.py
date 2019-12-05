@@ -79,3 +79,24 @@ def test_intersection(datadir):
 
     assert isinstance(result, Corpus)
     assert len(result) == 1
+
+
+def test_set_document_compare_function_and_set_document_hash_function(datadir):
+    corpus_one = Corpus.read_from_file(datadir / 'corpus_one.conllx')
+    corpus_two = Corpus.read_from_file(datadir / "corpus_two.conllx")
+
+    assert corpus_one != corpus_two
+
+    def consider_text_only_document_compare_function(self, other):
+        return self.text == other.text
+
+    corpus_one.set_document_compare_method(consider_text_only_document_compare_function)
+    corpus_two.set_document_compare_method(consider_text_only_document_compare_function)
+
+    def consider_text_only_document_hash_function(self):
+        return hash(frozenset(self.text))
+
+    corpus_one.set_document_hash_method(consider_text_only_document_hash_function)
+    corpus_two.set_document_hash_method(consider_text_only_document_hash_function)
+
+    assert corpus_one == corpus_two

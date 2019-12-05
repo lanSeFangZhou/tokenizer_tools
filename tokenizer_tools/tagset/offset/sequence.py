@@ -1,5 +1,5 @@
 import uuid
-from typing import Union, Any, Mapping, List
+from typing import Union, Any, Mapping, List, Callable
 
 from tokenizer_tools.tagset.offset.span_set import SpanSet
 from tokenizer_tools.tagset.offset.span import Span
@@ -38,6 +38,9 @@ class Sequence(object):
         self.label = label  # for feature usage
         self.extra_attr = extra_attr if extra_attr else {}
 
+        self._compare_method = self._default_compare_method
+        self._hash_method = self._default_hash_method
+
     def add_extra_attr(self, **kwargs):
         self.extra_attr = kwargs
 
@@ -54,15 +57,29 @@ class Sequence(object):
 
         return check_overlap and check_match, overlapped_result, mismatch_result
 
-    def __eq__(self, other):
+    def set_compare_method(self, compare_method: Callable[["Sequence", "Sequence"], bool]):
+        self._compare_method = compare_method
+
+    def set_hash_method(self, hash_method: Callable[["Sequence"], int]):
+        self._hash_method = hash_method
+
+    @staticmethod
+    def _default_compare_method(self, other):
         return (
             self.text == other.text
             and self.span_set == other.span_set
             and self.extra_attr == other.extra_attr
         )
 
-    def __hash__(self):
+    @staticmethod
+    def _default_hash_method(self):
         return hash((frozenset(self.text), self.span_set, self.label))
+
+    def __eq__(self, other):
+        return self._compare_method(self, other)
+
+    def __hash__(self):
+        return self._hash_method(self)
 
     def __repr__(self):
         return "{}(text={!r}, span_set={!r}, id={!r}, label={!r}, extra_attr={!r})".format(
