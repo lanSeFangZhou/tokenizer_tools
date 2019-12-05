@@ -64,3 +64,18 @@ def test_remove_duplicate(datadir):
     assert isinstance(duplicate_free, Corpus)
     assert len(duplicate_free) == 2
 
+
+def test_intersection(datadir):
+    corpus = Corpus.read_from_file(datadir / 'self.conllx')
+    other_corpus = Corpus.read_from_file(datadir / "other.conllx")
+
+    result = corpus.intersection(other_corpus)
+
+    assert isinstance(result, Corpus)
+    assert len(result) == 2
+
+    second_corpus = Corpus.read_from_file(datadir / "second_other.conllx")
+    result = corpus.intersection(other_corpus, second_corpus)
+
+    assert isinstance(result, Corpus)
+    assert len(result) == 1

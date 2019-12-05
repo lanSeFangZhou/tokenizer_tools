@@ -83,8 +83,15 @@ class Corpus(List[Document]):
     def union(self, *others):
         pass
 
-    def intersection(self, *others):
-        pass
+    def intersection(self, *others) -> "Corpus":
+        intersection_corpus = None
+        for other in others:
+            if intersection_corpus is None:
+                intersection_corpus = set(self)
+
+            intersection_corpus = intersection_corpus.intersection(set(other))
+
+        return self.__class__(list(intersection_corpus))
 
     def difference(self, *others):
         pass
