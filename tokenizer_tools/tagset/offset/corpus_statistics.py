@@ -36,26 +36,32 @@ class CorpusStatistics:
 
     @classmethod
     def _collect_domain(cls, corpus: "Corpus") -> Counter:
-        pass
+        domain_list = [doc.domain for doc in corpus]
+        return Counter(domain_list)
 
     @classmethod
     def _collect_function(cls, corpus: "Corpus") -> Counter:
-        pass
+        function_list = [doc.function for doc in corpus]
+        return Counter(function_list)
 
     @classmethod
     def _collect_sub_function(cls, corpus: "Corpus") -> Counter:
-        pass
+        sub_function_list = [doc.sub_function for doc in corpus]
+        return Counter(sub_function_list)
 
     @classmethod
     def _collect_intent(cls, corpus: "Corpus") -> Counter:
-        pass
+        intent_list = [doc.intent for doc in corpus]
+        return Counter(intent_list)
 
     @classmethod
     def _collect_entity_types(cls, corpus: "Corpus") -> Counter:
-        pass
+        entities_list = [span.entity for doc in corpus for span in doc.entities]
+        return Counter(entities_list)
 
     @classmethod
     def _collect_entity_values(cls, corpus: "Corpus") -> Counter:
+        # TODO: wait for auto entity value binding with text feature
         pass
 
     def __eq__(self, other):
