@@ -19,7 +19,7 @@ def test_check_span_set():
     assert not result
 
 
-def test_eq_():
+def test_eq__():
     a = Sequence("text")
 
     b = Sequence("text")
@@ -42,6 +42,46 @@ def test_eq_():
     f.span_set.append(Span(0, 2, 'entity'))
 
     assert d != f
+
+
+def test_hash__():
+    a = Sequence("text")
+
+    b = Sequence("text")
+
+    assert hash(a) == hash(b)
+
+    c = Sequence("other_text")
+
+    assert hash(a) != hash(c)
+
+    d = Sequence('text')
+    d.span_set.append(Span(0, 1, 'entity'))
+
+    e = Sequence('text')
+    e.span_set.append(Span(0, 1, 'entity'))
+
+    assert hash(d) == hash(e)
+
+    f = Sequence('text')
+    f.span_set.append(Span(0, 2, 'entity'))
+
+    assert hash(d) != hash(f)
+
+    g = Sequence('text')
+    g.span_set.append(Span(0, 1, 'entity'))
+    g.span_set.append(Span(1, 2, 'entity'))
+
+    h = Sequence('text')
+    h.span_set.append(Span(0, 1, 'entity'))
+    h.span_set.append(Span(1, 2, 'entity'))
+
+    assert hash(g) == hash(h)
+
+    i = Sequence('text')
+    i.span_set.append(Span(0, 2, 'entity'))
+
+    assert hash(g) != hash(i)
 
 
 def test_set_compare_method():

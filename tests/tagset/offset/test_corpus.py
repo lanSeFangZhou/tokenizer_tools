@@ -4,20 +4,21 @@ from tokenizer_tools.tagset.offset.document import Document
 from tokenizer_tools.tagset.offset.span import Span
 from tokenizer_tools.tagset.offset.corpus import Corpus
 from tokenizer_tools.tagset.offset.document_compare_ways import DocumentCompareWays
+from tokenizer_tools.tagset.offset.span_set import SpanSet
 
 seq = Document("王小明在北京的清华大学读书。", id="1")
-seq.span_set.append(Span(0, 3, 'PERSON', '王小明'))
-seq.span_set.append(Span(4, 6, 'GPE', '北京'))
-seq.span_set.append(Span(7, 11, 'ORG', '清华大学'))
+seq.span_set.append(Span(0, 3, "PERSON", "王小明"))
+seq.span_set.append(Span(4, 6, "GPE", "北京"))
+seq.span_set.append(Span(7, 11, "ORG", "清华大学"))
 seq_one = seq
 
 seq = Document("来一首蓝泽雨的歌。", id="2")
-seq.span_set.append(Span(3, 6, '歌手名', '蓝泽雨'))
+seq.span_set.append(Span(3, 6, "歌手名", "蓝泽雨"))
 seq_two = seq
 
 
 def test_read_from_file(datadir):
-    corpus = Corpus.read_from_file(datadir / 'output.conllx')
+    corpus = Corpus.read_from_file(datadir / "output.conllx")
 
     assert len(corpus) == 2
     assert corpus[0] == seq_one
@@ -30,15 +31,15 @@ def test_write_to_file(datadir, tmpdir):
     corpus.append(seq_one)
     corpus.append(seq_two)
 
-    result_file = tmpdir / 'output.conllx'
+    result_file = tmpdir / "output.conllx"
     corpus.write_to_file(result_file)
 
-    gold_file = datadir / 'output.conllx'
+    gold_file = datadir / "output.conllx"
 
     assert filecmp.cmp(result_file, gold_file)
 
 
-def test_getitem(datadir, tmpdir):
+def test_getitem__(datadir, tmpdir):
     corpus = Corpus()
 
     corpus.append(seq_one)
@@ -56,7 +57,7 @@ def test_getitem(datadir, tmpdir):
 
 
 def test_remove_duplicate(datadir):
-    corpus = Corpus.read_from_file(datadir / 'duplicate.conllx')
+    corpus = Corpus.read_from_file(datadir / "duplicate.conllx")
 
     assert len(corpus) == 4
 
@@ -67,7 +68,7 @@ def test_remove_duplicate(datadir):
 
 
 def test_intersection(datadir):
-    corpus = Corpus.read_from_file(datadir / 'self.conllx')
+    corpus = Corpus.read_from_file(datadir / "self.conllx")
     other_corpus = Corpus.read_from_file(datadir / "other.conllx")
 
     result = corpus.intersection(other_corpus)
@@ -83,7 +84,7 @@ def test_intersection(datadir):
 
 
 def test_set_document_compare_function_and_set_document_hash_function(datadir):
-    corpus_one = Corpus.read_from_file(datadir / 'corpus_one.conllx')
+    corpus_one = Corpus.read_from_file(datadir / "corpus_one.conllx")
     corpus_two = Corpus.read_from_file(datadir / "corpus_two.conllx")
 
     assert corpus_one != corpus_two
@@ -104,7 +105,7 @@ def test_set_document_compare_function_and_set_document_hash_function(datadir):
 
 
 def test_set_document_compare_way(datadir):
-    corpus_one = Corpus.read_from_file(datadir / 'corpus_one.conllx')
+    corpus_one = Corpus.read_from_file(datadir / "corpus_one.conllx")
     corpus_two = Corpus.read_from_file(datadir / "corpus_two.conllx")
 
     assert corpus_one != corpus_two
@@ -113,3 +114,43 @@ def test_set_document_compare_way(datadir):
     corpus_two.set_document_compare_way(DocumentCompareWays.TEXT_ONLY)
 
     assert corpus_one == corpus_two
+
+
+def test_difference(datadir):
+    corpus_one = Corpus.read_from_file(datadir / "corpus_one.conllx")
+    corpus_two = Corpus.read_from_file(datadir / "corpus_two.conllx")
+
+    result = corpus_one.difference(corpus_two)
+    expected = Corpus(
+        [
+            Document(
+                "王小明在台北新竹的清华大学读书。",
+                span_set=SpanSet(
+                    [Span(0, 3, "PERSON"), Span(4, 8, "GPE"), Span(9, 13, "ORG")]
+                ),
+                id="3",
+            )
+        ]
+    )
+
+    assert result == expected
+
+
+def test_union(datadir):
+    corpus_one = Corpus.read_from_file(datadir / "corpus_one.conllx")
+    corpus_two = Corpus.read_from_file(datadir / "corpus_two.conllx")
+
+    result = len(corpus_one.union(corpus_two))
+    expected = 4
+
+    assert result == expected
+
+
+def test_symmetric_difference(datadir):
+    corpus_one = Corpus.read_from_file(datadir / "corpus_one.conllx")
+    corpus_two = Corpus.read_from_file(datadir / "corpus_two.conllx")
+
+    result = len(corpus_one.symmetric_difference(corpus_two))
+    expected = 2
+
+    assert result == expected

@@ -94,7 +94,14 @@ class Corpus(List[Document]):
         pass
 
     def union(self, *others):
-        pass
+        union_corpus = None
+        for other in others:
+            if union_corpus is None:
+                union_corpus = set(self)
+
+            union_corpus = union_corpus.union(set(other))
+
+        return self.__class__(list(union_corpus))
 
     def intersection(self, *others) -> "Corpus":
         intersection_corpus = None
@@ -107,10 +114,17 @@ class Corpus(List[Document]):
         return self.__class__(list(intersection_corpus))
 
     def difference(self, *others):
-        pass
+        difference_corpus = None
+        for other in others:
+            if difference_corpus is None:
+                difference_corpus = set(self)
+
+            difference_corpus = difference_corpus.difference(set(other))
+
+        return self.__class__(list(difference_corpus))
 
     def symmetric_difference(self, other):
-        pass
+        return self.__class__(list(set(self).symmetric_difference(other)))
 
     def remove_duplicate(self) -> "Corpus":
         set_corpus = set(self)
@@ -119,3 +133,16 @@ class Corpus(List[Document]):
 
     def generate_statistics(self) -> CorpusStatistics:
         return CorpusStatistics.create_from_corpus(self)
+
+    def get_all_doc_ids(self) -> List[str]:
+        id_list = list([i.id for i in self])
+        if len(id_list) != len(set(id_list)):
+            raise ValueError("Document ids have duplicate")
+
+        return id_list
+
+    def get_doc_by_id(self, doc_id, default=None):
+        for doc in self:
+            if doc.id == doc_id:
+                return doc
+        return default
