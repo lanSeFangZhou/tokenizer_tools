@@ -3,6 +3,7 @@ import filecmp
 from tokenizer_tools.tagset.offset.document import Document
 from tokenizer_tools.tagset.offset.span import Span
 from tokenizer_tools.tagset.offset.corpus import Corpus
+from tokenizer_tools.tagset.offset.document_compare_ways import DocumentCompareWays
 
 seq = Document("王小明在北京的清华大学读书。", id="1")
 seq.span_set.append(Span(0, 3, 'PERSON', '王小明'))
@@ -98,5 +99,17 @@ def test_set_document_compare_function_and_set_document_hash_function(datadir):
 
     corpus_one.set_document_hash_method(consider_text_only_document_hash_function)
     corpus_two.set_document_hash_method(consider_text_only_document_hash_function)
+
+    assert corpus_one == corpus_two
+
+
+def test_set_document_compare_way(datadir):
+    corpus_one = Corpus.read_from_file(datadir / 'corpus_one.conllx')
+    corpus_two = Corpus.read_from_file(datadir / "corpus_two.conllx")
+
+    assert corpus_one != corpus_two
+
+    corpus_one.set_document_compare_way(DocumentCompareWays.TEXT_ONLY)
+    corpus_two.set_document_compare_way(DocumentCompareWays.TEXT_ONLY)
 
     assert corpus_one == corpus_two

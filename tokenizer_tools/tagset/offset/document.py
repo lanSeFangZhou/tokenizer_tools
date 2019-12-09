@@ -1,5 +1,6 @@
 import copy
 
+from tokenizer_tools.tagset.offset.document_compare_ways import DocumentCompareWays
 from tokenizer_tools.tagset.offset.sequence import Sequence
 
 
@@ -43,6 +44,10 @@ class Document(Sequence):
     @entities.setter
     def entities(self, entities):
         self.span_set = entities
+
+    def set_compare_way(self, compare_way: DocumentCompareWays):
+        self.set_compare_method(compare_way.value["eq"])
+        self.set_hash_method(compare_way.value["hash"])
 
     def convert_to_md(self) -> str:
         text_list = copy.deepcopy(self.text)

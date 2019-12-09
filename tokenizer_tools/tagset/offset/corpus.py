@@ -9,6 +9,7 @@ from tokenizer_tools.converter.conllz_to_offset import conllz_to_offset
 from tokenizer_tools.converter.offset_to_sentence import offset_to_sentence
 from tokenizer_tools.tagset.offset.corpus_statistics import CorpusStatistics
 from tokenizer_tools.tagset.offset.document import Document
+from tokenizer_tools.tagset.offset.document_compare_ways import DocumentCompareWays
 
 
 class Corpus(List[Document]):
@@ -54,6 +55,10 @@ class Corpus(List[Document]):
         train_set, test_set = train_test_split(self, **kwargs)
 
         return Corpus(train_set), Corpus(test_set)
+
+    def set_document_compare_way(self, compare_way: DocumentCompareWays):
+        for document in self:
+            document.set_compare_way(compare_way)
 
     def set_document_compare_method(self, compare_method: Callable[["Sequence", "Sequence"], bool]):
         for document in self:
