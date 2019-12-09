@@ -20,8 +20,14 @@ class Span(object):
         self.value = value
         self.normal_value = normal_value
 
+        self.host = None
+
     def fetch_value_from_text(self, text):
         return text[self.start : self.end]
+
+    def update_value(self, new_value):
+        self.host.text[self.start : self.end] = new_value
+        self.end = self.start + len(new_value)
 
     def check_match(self, text):
         if self.end > len(text):
@@ -45,6 +51,9 @@ class Span(object):
         matched_text = text[self.start : self.end]
 
         self.value = matched_text
+
+    def bind(self, host: "Sequence"):
+        self.host = host
 
     def __repr__(self):
         return "{}({!r}, {!r}, {!r}, value={!r}, normal_value={!r})".format(
