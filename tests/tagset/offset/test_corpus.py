@@ -56,6 +56,19 @@ def test_getitem__(datadir, tmpdir):
     assert other_corpus == corpus
 
 
+def test_contains__(datadir, tmpdir):
+    corpus = Corpus()
+
+    corpus.append(seq_one)
+    corpus.append(seq_two)
+
+    assert seq_one in corpus
+
+    other_corpus = Document("")
+
+    assert other_corpus not in corpus
+
+
 def test_remove_duplicate(datadir):
     corpus = Corpus.read_from_file(datadir / "duplicate.conllx")
 
