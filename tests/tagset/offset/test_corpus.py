@@ -7,13 +7,13 @@ from tokenizer_tools.tagset.offset.document_compare_ways import DocumentCompareW
 from tokenizer_tools.tagset.offset.span_set import SpanSet
 
 seq = Document("王小明在北京的清华大学读书。", id="1")
-seq.span_set.append(Span(0, 3, "PERSON", "王小明"))
-seq.span_set.append(Span(4, 6, "GPE", "北京"))
-seq.span_set.append(Span(7, 11, "ORG", "清华大学"))
+seq.span_set.append(Span(0, 3, "PERSON"))
+seq.span_set.append(Span(4, 6, "GPE"))
+seq.span_set.append(Span(7, 11, "ORG"))
 seq_one = seq
 
 seq = Document("来一首蓝泽雨的歌。", id="2")
-seq.span_set.append(Span(3, 6, "歌手名", "蓝泽雨"))
+seq.span_set.append(Span(3, 6, "歌手名"))
 seq_two = seq
 
 
