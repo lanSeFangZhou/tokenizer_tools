@@ -1,6 +1,7 @@
+import collections
 import typing
 from collections import Counter
-from typing import Union
+from typing import Union, Dict, List
 
 if typing.TYPE_CHECKING:
     from tokenizer_tools.tagset.offset.corpus import Corpus
@@ -55,14 +56,20 @@ class CorpusStatistics:
         return Counter(intent_list)
 
     @classmethod
-    def _collect_entity_types(cls, corpus: "Corpus") -> Counter:
-        entities_list = [span.entity for doc in corpus for span in doc.entities]
-        return Counter(entities_list)
+    def _collect_entity_types(cls, corpus: "Corpus") -> Dict[str, List[str]]:
+        entities_mapping = collections.defaultdict(list)
+        for doc in corpus:
+            for span in doc.entities:
+                entities_mapping[span.entity].append(tuple(span.value))
+        return dict(entities_mapping)
 
     @classmethod
-    def _collect_entity_values(cls, corpus: "Corpus") -> Counter:
-        value_list = [frozenset(span.value) for doc in corpus for span in doc.entities]
-        return Counter(value_list)
+    def _collect_entity_values(cls, corpus: "Corpus") -> Dict[str, List[str]]:
+        value_mapping = collections.defaultdict(list)
+        for doc in corpus:
+            for span in doc.entities:
+                value_mapping[tuple(span.value)].append(span.entity)
+        return dict(value_mapping)
 
     def __eq__(self, other):
         pass

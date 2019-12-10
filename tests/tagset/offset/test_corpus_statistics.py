@@ -78,7 +78,12 @@ def test_collect_entity_types(datadir):
 
     result = corpus_statistics.entity_types
 
-    expected = Counter({"PERSON": 2, "GPE": 2, "ORG": 2, "歌手名": 2})
+    expected = {
+        "PERSON": [("王", "小", "明"), ("王", "小", "明")],
+        "GPE": [("北", "京"), ("北", "京")],
+        "ORG": [("清", "华", "大", "学"), ("清", "华", "大", "学")],
+        "歌手名": [("蓝", "泽", "雨"), ("蓝", "泽", "雨")],
+    }
 
     assert result == expected
 
@@ -90,13 +95,11 @@ def test_collect_entity_values(datadir):
 
     result = corpus_statistics.entity_values
 
-    expected = Counter(
-        {
-            frozenset({"王", "小", "明"}): 2,
-            frozenset({"北", "京"}): 2,
-            frozenset({"学", "华", "清", "大"}): 2,
-            frozenset({"雨", "泽", "蓝"}): 2,
-        }
-    )
+    expected = {
+        ("王", "小", "明"): ["PERSON", "PERSON"],
+        ("北", "京"): ["GPE", "GPE"],
+        ("清", "华", "大", "学"): ["ORG", "ORG"],
+        ("蓝", "泽", "雨"): ["歌手名", "歌手名"],
+    }
 
     assert result == expected
