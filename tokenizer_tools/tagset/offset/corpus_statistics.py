@@ -61,8 +61,8 @@ class CorpusStatistics:
 
     @classmethod
     def _collect_entity_values(cls, corpus: "Corpus") -> Counter:
-        # TODO: wait for auto entity value binding with text feature
-        pass
+        value_list = [frozenset(span.value) for doc in corpus for span in doc.entities]
+        return Counter(value_list)
 
     def __eq__(self, other):
         pass

@@ -30,7 +30,7 @@ def test_collect_domain(datadir):
 
     result = corpus_statistics.domain
 
-    expected = Counter({'domain_one': 2, 'domain_two': 2})
+    expected = Counter({"domain_one": 2, "domain_two": 2})
 
     assert result == expected
 
@@ -42,7 +42,7 @@ def test_collect_function(datadir):
 
     result = corpus_statistics.function
 
-    expected = Counter({'function_one': 2, 'function_two': 2})
+    expected = Counter({"function_one": 2, "function_two": 2})
 
     assert result == expected
 
@@ -54,7 +54,7 @@ def test_collect_sub_function(datadir):
 
     result = corpus_statistics.sub_function
 
-    expected = Counter({'sub_function_one': 2, 'sub_function_two': 2})
+    expected = Counter({"sub_function_one": 2, "sub_function_two": 2})
 
     assert result == expected
 
@@ -66,6 +66,37 @@ def test_collect_intent(datadir):
 
     result = corpus_statistics.intent
 
-    expected = Counter({'intent_one': 2, 'intent_two': 2})
+    expected = Counter({"intent_one": 2, "intent_two": 2})
+
+    assert result == expected
+
+
+def test_collect_entity_types(datadir):
+    corpus = Corpus.read_from_file(datadir / "data.conllx")
+
+    corpus_statistics = CorpusStatistics.create_from_corpus(corpus)
+
+    result = corpus_statistics.entity_types
+
+    expected = Counter({"PERSON": 2, "GPE": 2, "ORG": 2, "歌手名": 2})
+
+    assert result == expected
+
+
+def test_collect_entity_values(datadir):
+    corpus = Corpus.read_from_file(datadir / "data.conllx")
+
+    corpus_statistics = CorpusStatistics.create_from_corpus(corpus)
+
+    result = corpus_statistics.entity_values
+
+    expected = Counter(
+        {
+            frozenset({"王", "小", "明"}): 2,
+            frozenset({"北", "京"}): 2,
+            frozenset({"学", "华", "清", "大"}): 2,
+            frozenset({"雨", "泽", "蓝"}): 2,
+        }
+    )
 
     assert result == expected

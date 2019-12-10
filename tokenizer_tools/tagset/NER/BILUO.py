@@ -150,6 +150,8 @@ class BILUOSequenceEncoderDecoder(object):
         for offset in plain_offset_list:
             seq.span_set.append(Span(offset[0], offset[1], offset[2]))
 
+        seq.span_set.bind(seq)
+
         seq.label = kwargs.pop('label', None)
         seq.id = kwargs.pop('id', None)
         seq.extra_attr = kwargs
