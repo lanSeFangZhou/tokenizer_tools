@@ -14,13 +14,24 @@ class Span(object):
         if not entity:
             raise OffsetSpanCheckError("'{}' is not a legal entity".format(entity))
 
+        # compatible assert
+        if value is not None:
+            raise ValueError("argument value={} is not supported anymore, ignore it".format(value))
+
         self.start = start
         self.end = end
         self.entity = entity
-        self.value = value
+        # self.value = value
         self.normal_value = normal_value
 
         self.host = None
+
+    @property
+    def value(self):
+        if not self.host:
+            return None
+            # raise ValueError("This {} is not bind to Sequence".format(self.__class__.__name__))
+        return self.host.text[self.start : self.end]
 
     def fetch_value_from_text(self, text):
         return text[self.start : self.end]

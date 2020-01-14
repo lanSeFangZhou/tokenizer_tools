@@ -1,7 +1,10 @@
+import pytest
+
 from tokenizer_tools.tagset.offset.span import Span
 from tokenizer_tools.tagset.offset.span_set import SpanSet
 
 
+@pytest.mark.skip(reason="deprecated API")
 def test_check_match():
     span_set = SpanSet()
     span_set.append(Span(1, 2, 'entity', '春'))

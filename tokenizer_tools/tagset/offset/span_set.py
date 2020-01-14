@@ -12,6 +12,11 @@ class SpanSet(List[Span]):
      SpanSet is a unordered list. each element is a span which is basic annotaion unit.
     """
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.host = None
+
     @staticmethod
     def _are_separate(r: Span, s: Span) -> bool:
         # learned from https://stackoverflow.com/questions/27182137/check-if-two-lines-each-with-start-end-positions-overlap-in-python
@@ -42,6 +47,14 @@ class SpanSet(List[Span]):
             return False, mismatch_list
 
         return True, []
+
+    def bind(self, host: "Sequence"):
+        self.host = host
+
+        for span in self:
+            span.bind(host)
+
+        # self.fill_text(host.text)
 
     def fill_text(self, text):
         flag, _ = self.check_match(text)
