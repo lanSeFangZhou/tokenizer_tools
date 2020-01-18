@@ -3,6 +3,7 @@ from typing import Union, Any, Mapping, List, Callable
 
 from tokenizer_tools.tagset.offset.span_set import SpanSet
 from tokenizer_tools.tagset.offset.span import Span
+from tokenizer_tools.tagset.offset.document_compare_ways import corpus_get_compare_way
 
 
 class Sequence(object):
@@ -15,13 +16,14 @@ class Sequence(object):
     * `id` is the unique id of this sequence, can be used for tracing.
     * `label` the label of this sequence, used for classification.
     """
+
     def __init__(
         self,
         text: Union[List[str], str],
         span_set: SpanSet = None,
         id: Union[str, None] = None,
         label: Union[str, None] = None,
-        extra_attr: Union[Mapping[str, Any], None]=None,
+        extra_attr: Union[Mapping[str, Any], None] = None,
     ):
         # TODO:
         #   1. rename extra_attr to attr
@@ -38,8 +40,32 @@ class Sequence(object):
         self.label = label  # for feature usage
         self.extra_attr = extra_attr if extra_attr else {}
 
-        self._compare_method = self._default_compare_method
-        self._hash_method = self._default_hash_method
+        self._compare_method = None
+        self._hash_method = None
+
+    @property
+    def compare_method(self):
+        if self._compare_method:
+            return self._compare_method
+
+        global_method = corpus_get_compare_way()
+        return global_method["eq"]
+
+    @compare_method.setter
+    def compare_method(self, value):
+        self._compare_method = value
+
+    @property
+    def hash_method(self):
+        if self._hash_method:
+            return self._hash_method
+
+        global_method = corpus_get_compare_way()
+        return global_method["hash"]
+
+    @property.setter
+    def hash_method(self, value):
+        self._hash_method = value
 
     def add_extra_attr(self, **kwargs):
         self.extra_attr = kwargs
@@ -57,11 +83,13 @@ class Sequence(object):
 
         return check_overlap and check_match, overlapped_result, mismatch_result
 
-    def set_compare_method(self, compare_method: Callable[["Sequence", "Sequence"], bool]):
-        self._compare_method = compare_method
+    def set_compare_method(
+        self, compare_method: Callable[["Sequence", "Sequence"], bool]
+    ):
+        self.compare_method = compare_method
 
     def set_hash_method(self, hash_method: Callable[["Sequence"], int]):
-        self._hash_method = hash_method
+        self.hash_method = hash_method
 
     @staticmethod
     def _default_compare_method(self, other):
@@ -76,10 +104,10 @@ class Sequence(object):
         return hash((frozenset(self.text), self.span_set, self.label))
 
     def __eq__(self, other):
-        return self._compare_method(self, other)
+        return self.compare_method(self, other)
 
     def __hash__(self):
-        return self._hash_method(self)
+        return self.hash_method(self)
 
     def __repr__(self):
         return "{}(text={!r}, span_set={!r}, id={!r}, label={!r}, extra_attr={!r})".format(
