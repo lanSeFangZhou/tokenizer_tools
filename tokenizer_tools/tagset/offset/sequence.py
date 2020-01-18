@@ -67,6 +67,8 @@ class Sequence(object):
     def hash_method(self, value):
         self._hash_method = value
 
+        self.span_set.bind(self)
+
     def add_extra_attr(self, **kwargs):
         self.extra_attr = kwargs
 
@@ -79,9 +81,10 @@ class Sequence(object):
         :return: bool
         """
         check_overlap, overlapped_result = self.span_set.check_overlap()
-        check_match, mismatch_result = self.span_set.check_match(self.text)
+        # check_match, mismatch_result = self.span_set.check_match(self.text)
 
-        return check_overlap and check_match, overlapped_result, mismatch_result
+        # return check_overlap and check_match, overlapped_result, mismatch_result
+        return check_overlap, overlapped_result
 
     def set_compare_method(
         self, compare_method: Callable[["Sequence", "Sequence"], bool]

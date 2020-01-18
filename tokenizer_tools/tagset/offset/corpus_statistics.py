@@ -1,6 +1,7 @@
+import collections
 import typing
 from collections import Counter
-from typing import Union
+from typing import Dict, Tuple, Optional
 
 if typing.TYPE_CHECKING:
     from tokenizer_tools.tagset.offset.corpus import Corpus
@@ -9,19 +10,19 @@ if typing.TYPE_CHECKING:
 class CorpusStatistics:
     def __init__(
         self,
-        domain: Union[Counter, None] = None,
-        function: Union[Counter, None] = None,
-        sub_function: Union[Counter, None] = None,
-        intent: Union[Counter, None] = None,
-        entity_types: Union[Counter, None] = None,
-        entity_values: Union[Counter, None] = None,
+        domain: Optional[Counter] = None,
+        function: Optional[Counter] = None,
+        sub_function: Optional[Counter] = None,
+        intent: Optional[Counter] = None,
+        entity_types: Optional[Dict[str, Counter]] = None,
+        entity_values: Optional[Dict[Tuple, Counter]] = None,
     ):
-        self.domain: Union[Counter, None] = domain
-        self.function: Union[Counter, None] = function
-        self.sub_function: Union[Counter, None] = sub_function
-        self.intent: Union[Counter, None] = intent
-        self.entity_types: Union[Counter, None] = entity_types
-        self.entity_values: Union[Counter, None] = entity_values
+        self.domain: Optional[Counter] = domain
+        self.function: Optional[Counter] = function
+        self.sub_function: Optional[Counter] = sub_function
+        self.intent: Optional[Counter] = intent
+        self.entity_types: Optional[Dict[str, Counter]] = entity_types
+        self.entity_values: Optional[Dict[Tuple, Counter]] = entity_values
 
     @classmethod
     def create_from_corpus(cls, corpus: "Corpus") -> "CorpusStatistics":
@@ -55,14 +56,35 @@ class CorpusStatistics:
         return Counter(intent_list)
 
     @classmethod
-    def _collect_entity_types(cls, corpus: "Corpus") -> Counter:
-        entities_list = [span.entity for doc in corpus for span in doc.entities]
-        return Counter(entities_list)
+    def _collect_entity_types(cls, corpus: "Corpus") -> Dict[str, Counter]:
+        """
+        collect statistic info about entity type: each type have what kinds of values
+        """
+        entities_mapping = collections.defaultdict(list)
+        for doc in corpus:
+            for span in doc.entities:
+                entities_mapping[span.entity].append(tuple(span.value))
+        return {k: Counter(v) for k, v in entities_mapping.items()}
 
     @classmethod
-    def _collect_entity_values(cls, corpus: "Corpus") -> Counter:
-        # TODO: wait for auto entity value binding with text feature
-        pass
+    def _collect_entity_values(cls, corpus: "Corpus") -> Dict[Tuple, Counter]:
+        """
+        collect statistic info about entity value: each value have what kinds of types
+        """
+        value_mapping = collections.defaultdict(list)
+        for doc in corpus:
+            for span in doc.entities:
+                value_mapping[tuple(span.value)].append(span.entity)
+        return {k: Counter(v) for k, v in value_mapping.items()}
 
-    def __eq__(self, other):
-        pass
+    def __eq__(self, other: "CorpusStatistics"):
+        if not isinstance(other, CorpusStatistics):
+            return False
+        return (
+            (self.domain == other.domain)
+            and (self.function == other.function)
+            and (self.sub_function == other.sub_function)
+            and (self.intent == other.intent)
+            and (self.entity_values == other.entity_values)
+            and (self.entity_types == other.entity_types)
+        )

@@ -84,6 +84,9 @@ class Corpus(List[Document]):
         else:
             return super().__getitem__(item)
 
+    def __contains__(self, item):
+        return item in frozenset(self)
+
     def isdisjoint(self, other):
         pass
 
