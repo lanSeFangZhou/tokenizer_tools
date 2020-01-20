@@ -4,6 +4,7 @@ from tokenizer_tools.tagset.offset.span_set import SpanSet
 
 
 def test_document_pattern():
+    # construct a pattern object
     dp = DocumentPattern("name 的 goods".split())
 
     dp.entities = SpanSet(
@@ -12,6 +13,8 @@ def test_document_pattern():
             EntityPlaceholder(start=2, end=3, entity="goods"),
         ]
     )
+
+    # test if render method works
 
     doc = dp.render(name=["Real", "Name"], goods=["RealGoods"])
 
