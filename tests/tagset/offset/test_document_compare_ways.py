@@ -42,3 +42,6 @@ def test_document_compare_context():
     out_context_result = corpus_get_compare_way()
 
     assert out_context_result == out_context_expected
+
+    # reset to default, otherwise will pollute other test cases
+    document_compare_ways.reset_global_corpus_compare_way()

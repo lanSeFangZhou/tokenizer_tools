@@ -35,6 +35,7 @@ class Sequence(object):
             text = list(i for i in text)
 
         self.text = text
+        self._span_set = None
         self.span_set = span_set or SpanSet()
         self.id = id if id is not None else str(uuid.uuid4())
         self.label = label  # for feature usage
@@ -42,6 +43,17 @@ class Sequence(object):
 
         self._compare_method = None
         self._hash_method = None
+
+    @property
+    def span_set(self):
+        return self._span_set
+
+    @span_set.setter
+    def span_set(self, value):
+        self._span_set = value
+
+        # binding now
+        self._span_set.bind(self)
 
     @property
     def compare_method(self):
@@ -63,7 +75,7 @@ class Sequence(object):
         global_method = corpus_get_compare_way()
         return global_method["hash"]
 
-    @property.setter
+    @hash_method.setter
     def hash_method(self, value):
         self._hash_method = value
 

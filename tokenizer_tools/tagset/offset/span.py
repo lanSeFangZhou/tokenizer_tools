@@ -16,7 +16,9 @@ class Span(object):
 
         # compatible assert
         if value is not None:
-            raise ValueError("argument value={} is not supported anymore, ignore it".format(value))
+            raise ValueError(
+                "argument value={} is not supported anymore, ignore it".format(value)
+            )
 
         self.start = start
         self.end = end
@@ -24,6 +26,7 @@ class Span(object):
         # self.value = value
         self.normal_value = normal_value
 
+        # document that this span binding to
         self.host = None
 
     @property
@@ -35,6 +38,10 @@ class Span(object):
 
     def fetch_value_from_text(self, text):
         return text[self.start : self.end]
+
+    @value.setter
+    def value(self, new_value):
+        self.update_value(new_value)
 
     def update_value(self, new_value):
         self.host.text[self.start : self.end] = new_value
@@ -65,6 +72,10 @@ class Span(object):
 
     def bind(self, host: "Sequence"):
         self.host = host
+
+    def __deepcopy__(self, memodict={}):
+        # not bind info
+        return self.__class__(start=self.start, end=self.end, entity=self.entity)
 
     def __repr__(self):
         return "{}({!r}, {!r}, {!r}, value={!r}, normal_value={!r})".format(

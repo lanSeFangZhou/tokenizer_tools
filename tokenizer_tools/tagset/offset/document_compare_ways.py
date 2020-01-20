@@ -1,4 +1,5 @@
 from enum import Enum
+from typing import Dict
 
 
 def consider_text_only_document_compare_function(self, other):
@@ -78,4 +79,13 @@ class DocumentCompareWays(Enum):
     TEXT_ENTITY_INTENT_DOMAIN = 4
 
 
-GLOBAL_CORPUS_COMPARE_WAY = DocumentCompareWays.ALL.value
+GLOBAL_CORPUS_COMPARE_WAY = None
+
+
+def reset_global_corpus_compare_way():
+    global GLOBAL_CORPUS_COMPARE_WAY
+    GLOBAL_CORPUS_COMPARE_WAY = DocumentCompareWays.ALL.value
+
+
+# call function to set up the default one
+reset_global_corpus_compare_way()

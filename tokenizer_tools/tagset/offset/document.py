@@ -43,6 +43,7 @@ class Document(Sequence):
 
     @entities.setter
     def entities(self, entities):
+        entities.bind(self)
         self.span_set = entities
 
     def set_compare_way(self, compare_way: DocumentCompareWays):
@@ -68,6 +69,24 @@ class Document(Sequence):
             intent=self.intent,
             body=self.convert_to_md(),
         )
+
+    def __deepcopy__(self, memodict={}) -> "Document":
+        cls = self.__class__
+        doc = cls(copy.deepcopy(self.text))
+
+        attrs_need_be_copied = [
+            "domain",
+            "intent",
+            "function",
+            "sub_function",
+        ]
+
+        for attr in attrs_need_be_copied:
+            setattr(doc, attr, getattr(self, attr))
+
+        doc.entities = copy.deepcopy(self.entities)
+
+        return doc
 
     def compare_entities(self, other):
         return self.text == other.text and self.span_set == other.span_set

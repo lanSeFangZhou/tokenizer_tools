@@ -1,8 +1,5 @@
 from tokenizer_tools.tagset.offset.analysis.express_pattern import ExpressPattern
 from tokenizer_tools.tagset.offset.corpus import Corpus
-from tokenizer_tools.tagset.offset.document import Document
-from tokenizer_tools.tagset.offset.span import Span
-from tokenizer_tools.tagset.offset.span_set import SpanSet
 
 
 def test_express_pattern(datadir):
@@ -11,76 +8,23 @@ def test_express_pattern(datadir):
     express_pattern = ExpressPattern(corpus)
     result = express_pattern.compute()
 
-    expected = {
-        ("<PERSON>", "在", "<GPE>", "的", "<ORG>", "读", "书", "。"): [
-            Document(
-                text=[
-                    "王",
-                    "小",
-                    "明",
-                    "在",
-                    "北",
-                    "京",
-                    "的",
-                    "清",
-                    "华",
-                    "大",
-                    "学",
-                    "读",
-                    "书",
-                    "。",
-                ],
-                span_set=SpanSet(
-                    [
-                        Span(0, 3, "PERSON", value=None, normal_value=None),
-                        Span(4, 6, "GPE", value=None, normal_value=None),
-                        Span(7, 11, "ORG", value=None, normal_value=None),
-                    ]
-                ),
-                id="1",
-                label=None,
-                extra_attr={},
-            ),
-            Document(
-                text=[
-                    "王",
-                    "小",
-                    "明",
-                    "在",
-                    "台",
-                    "北",
-                    "新",
-                    "竹",
-                    "的",
-                    "清",
-                    "华",
-                    "大",
-                    "学",
-                    "读",
-                    "书",
-                    "。",
-                ],
-                span_set=SpanSet(
-                    [
-                        Span(0, 3, "PERSON", value=None, normal_value=None),
-                        Span(4, 8, "GPE", value=None, normal_value=None),
-                        Span(9, 13, "ORG", value=None, normal_value=None),
-                    ]
-                ),
-                id="3",
-                label=None,
-                extra_attr={},
-            ),
-        ],
-        ("来", "一", "首", "<歌手名>", "的", "歌", "。"): [
-            Document(
-                text=["来", "一", "首", "蓝", "泽", "雨", "的", "歌", "。"],
-                span_set=SpanSet([Span(3, 6, "歌手名", value=None, normal_value=None)]),
-                id="2",
-                label=None,
-                extra_attr={},
-            )
-        ],
-    }
+    result_keys = [str(i) for i in result.keys()]
 
-    assert result == expected
+    expected_keys = ["<PERSON> 在 <GPE> 的 <ORG> 读 书 。", "来 一 首 <歌手名> 的 歌 。"]
+
+    for r, e in zip(result_keys, expected_keys):
+        assert e in r
+
+    result_value = result.values()
+
+    expected_value = [
+        [
+            "[王 小 明](PERSON) 在 [北 京](GPE) 的 [清 华 大 学](ORG) 读 书 。",
+            "[王 小 明](PERSON) 在 [台 北 新 竹](GPE) 的 [清 华 大 学](ORG) 读 书 。",
+        ],
+        ["来 一 首 [蓝 泽 雨](歌手名) 的 歌 。"],
+    ]
+
+    for i, value in enumerate(result_value):
+        for j, element in enumerate(value):
+            assert expected_value[i][j] in str(element)

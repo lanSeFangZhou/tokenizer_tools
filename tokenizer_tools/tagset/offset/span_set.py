@@ -15,6 +15,7 @@ class SpanSet(List[Span]):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
+        # document this object binding to
         self.host = None
 
     @staticmethod
@@ -55,6 +56,15 @@ class SpanSet(List[Span]):
             span.bind(host)
 
         # self.fill_text(host.text)
+
+    def append(self, span) -> None:
+        # override append method of list class
+        super().append(span)
+        span.bind(self.host)
+
+    def __deepcopy__(self, memodict={}):
+        # not bind info
+        return self.__class__([copy.deepcopy(span) for span in self])
 
     def fill_text(self, text):
         flag, _ = self.check_match(text)
