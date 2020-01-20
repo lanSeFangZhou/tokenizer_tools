@@ -11,28 +11,8 @@ with open("README.rst") as readme_file:
 with open("HISTORY.rst") as history_file:
     history = history_file.read()
 
-
-def is_tensorflow_installed():
-    """
-    detect if tensorflow (no matter CPU or GPU based) installed
-
-    :return: bool, True for tensorflow installed
-    """
-    import importlib
-
-    try:
-        importlib.import_module("tensorflow")
-    except ModuleNotFoundError:
-        return False
-
-    return True
-
-
 # without tensorflow by default
-install_requires = ["Click>=6.0", "scikit-learn", "scipy", "pandas"]
-
-if not is_tensorflow_installed():
-    install_requires.append("tensorflow")  # Will install CPU based TensorFlow
+install_requires = ["Click>=6.0", "scikit-learn", "scipy", "pandas", "tensorflow~=1.15"]
 
 
 setup_requirements = ["pytest-runner"]
