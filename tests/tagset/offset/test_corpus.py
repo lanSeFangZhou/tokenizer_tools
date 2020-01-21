@@ -167,3 +167,13 @@ def test_symmetric_difference(datadir):
     expected = 2
 
     assert result == expected
+
+
+def test_fuzzy_search(datadir):
+    corpus = Corpus.read_from_file(datadir / "output.conllx")
+
+    result = corpus.fuzzy_search("北京 读书", limit=1)
+
+    expected = seq_one
+
+    assert result[0][0] == expected

@@ -12,7 +12,8 @@ with open("HISTORY.rst") as history_file:
     history = history_file.read()
 
 # without tensorflow by default
-install_requires = ["Click>=6.0", "scikit-learn", "scipy", "pandas", "tensorflow~=1.15"]
+install_requires = ["Click>=6.0", "scikit-learn", "scipy", "pandas", "tensorflow~=1.15",
+                    'fuzzywuzzy']
 
 
 setup_requirements = ["pytest-runner"]

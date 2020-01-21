@@ -2,6 +2,7 @@ from typing import Union, List, Tuple, Callable
 
 import numpy as np
 from sklearn.model_selection import train_test_split
+from fuzzywuzzy import process
 
 from tokenizer_tools.conllz.reader import read_conllx
 from tokenizer_tools.conllz.writer import write_conllx
@@ -149,3 +150,10 @@ class Corpus(List[Document]):
             if doc.id == doc_id:
                 return doc
         return default
+
+    def fuzzy_search(self, query, limit=3) -> List[Tuple[Document, int]]:
+        choices = self
+        result = process.extract(query, choices, limit=limit)
+
+        return result
+
