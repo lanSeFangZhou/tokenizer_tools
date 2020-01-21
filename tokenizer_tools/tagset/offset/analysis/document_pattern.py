@@ -1,5 +1,6 @@
 import copy
 from collections import OrderedDict
+from typing import List
 
 from tokenizer_tools.tagset.offset.analysis.entity_placeholder import EntityPlaceholder
 from tokenizer_tools.tagset.offset.document import Document
@@ -63,6 +64,9 @@ class DocumentPattern(Document):
         doc.span_set.bind(doc)
 
         return doc
+
+    def get_placeholders(self) -> List[EntityPlaceholder]:
+        return [i for i in self.span_set if isinstance(i, EntityPlaceholder)]
 
     def render(self, **kwargs) -> Document:
         # TODO: compute as stream of block will be more readable
