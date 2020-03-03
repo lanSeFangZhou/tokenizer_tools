@@ -17,7 +17,9 @@ def read_conllx_from_string(conllx_string):
         raw_line_list = raw_sentence.split('\n')
         for index, raw_line in enumerate(raw_line_list):
             if index == 0:
+                # TODO this function has problem
                 meta_string = raw_line.strip('#\t\n ')
+                # json.loads() function?
                 meta_data = json.loads(meta_string)
                 sentence.id = meta_data.pop('id')
                 sentence.meta = meta_data
@@ -90,6 +92,6 @@ def read_conllx(input_fd):
 
 
 if __name__ == "__main__":
-    with open('/Users/howl/Repositories/tokenizer_tools/tests/conllz/test_data/test.conllz') as fd:
+    with open('/root/tokenizer_tools/tests/conllz/test_data/test.conllz') as fd:
         sentence = read_conllz(fd)
     print(sentence)

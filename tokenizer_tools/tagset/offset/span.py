@@ -12,7 +12,8 @@ class Span(object):
         if end <= start:
             raise OffsetSpanCheckError("end is smaller than or equal to start")
         if not entity:
-            raise OffsetSpanCheckError("'{}' is not a legal entity".format(entity))
+            # empty is empty,this format have no function
+            raise OffsetSpanCheckError("this is a illlegal entity")
 
         # compatible assert
         if value is not None:

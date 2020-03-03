@@ -74,6 +74,8 @@ class BILUOSequenceEncoderDecoder(object):
     def is_prefix_legal(self, previous, current):
         node = (previous, current)
 
+        # TODO Does this can write as config, then generate?
+        # BILUO two parameter consist random?
         legal_set = {
             ('B', 'I'),
             ('B', 'L'),

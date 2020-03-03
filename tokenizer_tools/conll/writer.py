@@ -9,7 +9,7 @@ def write_conll(data, output_file, blank_token='_', conll_format=False):
             for raw_row in sentence:
                 # convert empty char to `_`
                 row = [i if i != " " else blank_token for i in raw_row]
-
+                #TODO why?
                 fd.write('{}'.format("\t".join(row)))
                 fd.write('\n')
 

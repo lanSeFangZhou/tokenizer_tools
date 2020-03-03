@@ -1,6 +1,6 @@
 from tokenizer_tools.conll.iterator_reader import iterator_reader
 
-
+#TODO datadir haa problems
 def test_iterator_reader(datadir):
     input_file = list(sorted([i for i in datadir.glob("*") if i.is_file()]))
 

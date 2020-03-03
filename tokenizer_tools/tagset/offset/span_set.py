@@ -28,6 +28,7 @@ class SpanSet(List[Span]):
         if overlap return False, otherwise return True
         :return: bool
         """
+        # todo these two step?
         comb = list(itertools.combinations(self, 2))
 
         test_results = list(map(lambda x: self._are_separate(*x), comb))
@@ -36,7 +37,7 @@ class SpanSet(List[Span]):
             overlapped_list = [comb[i] for i, v in enumerate(test_results) if not v]
 
             return False, overlapped_list
-
+        # TODO return different kinds parameter?
         return True, []
 
     def check_match(self, text):

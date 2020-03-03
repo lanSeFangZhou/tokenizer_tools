@@ -1,6 +1,6 @@
 from tokenizer_tools.conll.reader import read_conll
 
-
+#TODO datadir haa problems
 def test_read_conll(datadir):
     result = read_conll(datadir / "data.conll")
 

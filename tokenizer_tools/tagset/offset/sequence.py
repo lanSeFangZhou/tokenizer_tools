@@ -53,6 +53,7 @@ class Sequence(object):
         self._span_set = value
 
         # binding now
+        # todo why? what does the bind do?
         self._span_set.bind(self)
 
     @property
